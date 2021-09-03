@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import pl.humberd.salary_comparator.ui.components.Dropdown
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 import pl.humberd.salary_comparator.ui.views.main.MainForm
 

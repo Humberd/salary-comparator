@@ -3,22 +3,27 @@ package pl.humberd.salary_comparator.ui.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.toSize
+import com.murgupluoglu.flagkit.FlagKit
+import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
 data class DropdownItemModel(
-    val text: String,
-    val value: String,
-    val icon: ImageVector? = null
+    val name: String,
+    val icon: Int?
 )
 
 @Composable
@@ -29,16 +34,20 @@ fun Dropdown(
     onValueChange: (String) -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
+    var controlSize by remember { mutableStateOf(Size.Zero) }
 
     TextButton(
         onClick = {
             expanded = true
         },
+        Modifier.onGloballyPositioned {
+            controlSize = it.size.toSize()
+        }
     ) {
         Row(
-            modifier = Modifier
-                .padding(horizontal = 0.dp, vertical = 0.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
                 Text(
@@ -57,7 +66,8 @@ fun Dropdown(
 
     DropdownMenu(
         expanded = expanded,
-        onDismissRequest = { expanded = false }
+        onDismissRequest = { expanded = false },
+        Modifier.width(with(LocalDensity.current) { controlSize.width.toDp() })
     ) {
         if (items.size == 0) {
             Text(text = "Not found")
@@ -67,7 +77,7 @@ fun Dropdown(
                 model = it,
                 onClick = {
                     expanded = false
-                    onValueChange(it.value)
+                    onValueChange(it.name)
                 }
             )
         }
@@ -85,13 +95,13 @@ fun DropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
         ) {
             if (model.icon != null) {
                 Icon(
-                    imageVector = model.icon,
+                    painter = painterResource(id = model.icon),
                     contentDescription = "",
                     modifier = Modifier.padding(end = 4.dp)
                 )
             }
             Text(
-                model.text,
+                model.name,
             )
         }
     }
@@ -102,16 +112,18 @@ fun DropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
 fun PreviewDropdown() {
     var state by remember { mutableStateOf("PLN") }
 
+
     SalarycomparatorTheme {
+        val context = LocalContext.current
         Dropdown(
             label = "From",
-            items = listOf(
-                DropdownItemModel("PLN", "PLN", Icons.Default.ThumbUp),
-                DropdownItemModel("EUR", "EUR", Icons.Default.ThumbUp),
-                DropdownItemModel("USD", "USD", Icons.Default.ThumbUp)
-            ),
+            items = CurrencyService.getAvailableCurrencies(LocalContext.current)
+                .map { DropdownItemModel(it.name, it.icon) },
             value = state,
-            onValueChange = { state = it }
+            onValueChange = {
+                println(FlagKit.getResId(context, "pl"))
+                state = it
+            }
         )
     }
 }
@@ -121,7 +133,7 @@ fun PreviewDropdown() {
 fun PreviewDropdownItem() {
     SalarycomparatorTheme {
         DropdownItem(
-            DropdownItemModel("PLN", "PLN", Icons.Default.ThumbUp),
+            DropdownItemModel("PLN", FlagKit.getResId(LocalContext.current, "pl")),
             onClick = {}
         )
     }
