@@ -1,22 +1,19 @@
 package pl.humberd.salary_comparator.ui.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
-import java.util.*
 
 data class DropdownItemModel(
     val text: String,
@@ -28,47 +25,44 @@ data class DropdownItemModel(
 fun Dropdown(
     label: String,
     items: List<DropdownItemModel> = emptyList(),
+    value: String = "",
     onValueChange: (String) -> Unit = {}
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var searchText by remember { mutableStateOf("") }
-    var filteredItems by remember { mutableStateOf(items) }
 
-    fun filterItems() {
-        val searchTextLc = searchText.lowercase(Locale.getDefault())
-        filteredItems =
-            items.filter { it.text.lowercase(Locale.getDefault()).contains(searchTextLc) }
-    }
-
-    TextField(
-        label = { Text(label) },
-        value = searchText,
-        trailingIcon = {
+    TextButton(
+        onClick = {
+            expanded = true
+        },
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 0.dp, vertical = 0.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column {
+                Text(
+                    label,
+                    fontSize = 12.sp
+                )
+                Text(value)
+            }
             Icon(
                 if (expanded) Icons.Rounded.KeyboardArrowUp else Icons.Rounded.KeyboardArrowDown,
-                contentDescription = ""
+                contentDescription = "",
+                Modifier.padding(start = 8.dp)
             )
-        },
-        onValueChange = {
-            searchText = it
-            filterItems()
-        },
-        singleLine = true,
-        modifier = Modifier
-            .onFocusChanged {
-                if (it.isFocused) {
-                    expanded = true
-                }
-            }
-    )
+        }
+    }
+
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = { expanded = false }
     ) {
-        if (filteredItems.size == 0) {
+        if (items.size == 0) {
             Text(text = "Not found")
         }
-        filteredItems.forEach {
+        items.forEach {
             DropdownItem(
                 model = it,
                 onClick = {
@@ -93,7 +87,7 @@ fun DropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
                 Icon(
                     imageVector = model.icon,
                     contentDescription = "",
-                    modifier = Modifier.padding(end = 16.dp)
+                    modifier = Modifier.padding(end = 4.dp)
                 )
             }
             Text(
@@ -106,6 +100,8 @@ fun DropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewDropdown() {
+    var state by remember { mutableStateOf("PLN") }
+
     SalarycomparatorTheme {
         Dropdown(
             label = "From",
@@ -113,7 +109,9 @@ fun PreviewDropdown() {
                 DropdownItemModel("PLN", "PLN", Icons.Default.ThumbUp),
                 DropdownItemModel("EUR", "EUR", Icons.Default.ThumbUp),
                 DropdownItemModel("USD", "USD", Icons.Default.ThumbUp)
-            )
+            ),
+            value = state,
+            onValueChange = { state = it }
         )
     }
 }
