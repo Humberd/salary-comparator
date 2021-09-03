@@ -91,6 +91,7 @@ fun DropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
             if (model.icon != null) {
