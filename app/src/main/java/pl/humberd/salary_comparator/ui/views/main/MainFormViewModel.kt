@@ -11,12 +11,19 @@ class MainFormViewModel : ViewModel() {
     private val _targetCurrency = MutableLiveData("EUR")
     val targetCurrency: LiveData<String> = _targetCurrency
 
+    private val _rawValue = MutableLiveData("0")
+    val rawValue: LiveData<String> = _rawValue
+
     fun updateSourceCurrency(new: String) {
         _sourceCurrency.value = new
     }
 
     fun updateTargetCurrency(new: String) {
         _targetCurrency.value = new
+    }
+
+    fun updateValue(new: String) {
+        _rawValue.value = new
     }
 
     fun swap() {
