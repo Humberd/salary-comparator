@@ -38,16 +38,19 @@ fun MainForm(viewModel: MainFormViewModel = MainFormViewModel()) {
         Row(
             Modifier.fillMaxWidth(),
         ) {
-            Dropdown(
+            Column(
                 Modifier.weight(0.5f),
-                label = "From",
-                items = CurrencyService.getAvailableCurrencies(LocalContext.current)
-                    .map { DropdownItemModel(it.name, it.icon) },
-                value = sourceCurrency,
-                onValueChange = {
-                    viewModel.updateSourceCurrency(it)
-                }
-            )
+            ) {
+                Dropdown(
+                    label = "From",
+                    items = CurrencyService.getAvailableCurrencies(LocalContext.current)
+                        .map { DropdownItemModel(it.name, it.icon) },
+                    value = sourceCurrency,
+                    onValueChange = {
+                        viewModel.updateSourceCurrency(it)
+                    }
+                )
+            }
             IconButton(
                 onClick = {
                     viewModel.swap()
@@ -59,16 +62,19 @@ fun MainForm(viewModel: MainFormViewModel = MainFormViewModel()) {
                     contentDescription = ""
                 )
             }
-            Dropdown(
+            Column(
                 Modifier.weight(0.5f),
-                label = "To",
-                items = CurrencyService.getAvailableCurrencies(LocalContext.current)
-                    .map { DropdownItemModel(it.name, it.icon) },
-                value = targetCurrency,
-                onValueChange = {
-                    viewModel.updateTargetCurrency(it)
-                }
-            )
+            ) {
+                Dropdown(
+                    label = "To",
+                    items = CurrencyService.getAvailableCurrencies(LocalContext.current)
+                        .map { DropdownItemModel(it.name, it.icon) },
+                    value = targetCurrency,
+                    onValueChange = {
+                        viewModel.updateTargetCurrency(it)
+                    }
+                )
+            }
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -94,16 +100,19 @@ fun MainForm(viewModel: MainFormViewModel = MainFormViewModel()) {
                 )
             )
 
-            Dropdown(
+            Column(
                 modifier = Modifier.weight(0.5f),
-                items = AmountUnit.values().map {
-                    DropdownItemModel(it.name, null)
-                },
-                value = unit.toString(),
-                onValueChange = {
-                    viewModel.updateUnit(it)
-                }
-            )
+            ) {
+                Dropdown(
+                    items = AmountUnit.values().map {
+                        DropdownItemModel(it.name, null)
+                    },
+                    value = unit.toString(),
+                    onValueChange = {
+                        viewModel.updateUnit(it)
+                    }
+                )
+            }
         }
 
         OutlinedButton(
