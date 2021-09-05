@@ -12,8 +12,8 @@ class MainFormViewModel : ViewModel() {
     private val _targetCurrency = MutableLiveData("EUR")
     val targetCurrency: LiveData<String> = _targetCurrency
 
-    private val _rawValue = MutableLiveData("0")
-    val rawValue: LiveData<String> = _rawValue
+    private val _amount = MutableLiveData("0")
+    val amount: LiveData<String> = _amount
 
     private val _unit = MutableLiveData(AmountUnit.MONTH)
     val unit: LiveData<AmountUnit> = _unit
@@ -27,7 +27,7 @@ class MainFormViewModel : ViewModel() {
     }
 
     fun updateValue(new: String) {
-        _rawValue.value = new
+        _amount.value = new
     }
 
     fun updateUnit(unit: String) {

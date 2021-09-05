@@ -31,7 +31,7 @@ import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 fun MainForm(viewModel: MainFormViewModel = MainFormViewModel()) {
     val sourceCurrency by viewModel.sourceCurrency.observeAsState("")
     val targetCurrency by viewModel.targetCurrency.observeAsState("")
-    val value by viewModel.rawValue.observeAsState("")
+    val value by viewModel.amount.observeAsState("")
     val unit by viewModel.unit.observeAsState(AmountUnit.MONTH)
 
     Column {
