@@ -28,7 +28,8 @@ data class DropdownItemModel(
 
 @Composable
 fun Dropdown(
-    label: String,
+    modifier: Modifier = Modifier,
+    label: String? = null,
     items: List<DropdownItemModel> = emptyList(),
     value: String = "",
     onValueChange: (String) -> Unit = {}
@@ -40,7 +41,7 @@ fun Dropdown(
         onClick = {
             expanded = true
         },
-        Modifier.onGloballyPositioned {
+        modifier.onGloballyPositioned {
             controlSize = it.size.toSize()
         }
     ) {
@@ -50,10 +51,12 @@ fun Dropdown(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
-                Text(
-                    label,
-                    fontSize = 12.sp
-                )
+                if (label != null) {
+                    Text(
+                        label,
+                        fontSize = 12.sp
+                    )
+                }
                 Text(value)
             }
             Icon(

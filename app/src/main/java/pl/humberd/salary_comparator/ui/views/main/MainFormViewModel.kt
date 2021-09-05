@@ -3,6 +3,7 @@ package pl.humberd.salary_comparator.ui.views.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import pl.humberd.salary_comparator.ui.components.AmountUnit
 
 class MainFormViewModel : ViewModel() {
     private val _sourceCurrency = MutableLiveData("PLN")
@@ -14,6 +15,9 @@ class MainFormViewModel : ViewModel() {
     private val _rawValue = MutableLiveData("0")
     val rawValue: LiveData<String> = _rawValue
 
+    private val _unit = MutableLiveData(AmountUnit.MONTH)
+    val unit: LiveData<AmountUnit> = _unit
+
     fun updateSourceCurrency(new: String) {
         _sourceCurrency.value = new
     }
@@ -24,6 +28,10 @@ class MainFormViewModel : ViewModel() {
 
     fun updateValue(new: String) {
         _rawValue.value = new
+    }
+
+    fun updateUnit(unit: String) {
+        _unit.value = AmountUnit.valueOf(unit)
     }
 
     fun swap() {
