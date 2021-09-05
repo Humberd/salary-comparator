@@ -41,7 +41,7 @@ fun Dropdown(
         onClick = {
             expanded = true
         },
-        modifier.onGloballyPositioned {
+        modifier = modifier.onGloballyPositioned {
             controlSize = it.size.toSize()
         }
     ) {
