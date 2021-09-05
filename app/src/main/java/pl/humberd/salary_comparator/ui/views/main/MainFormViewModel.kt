@@ -6,13 +6,13 @@ import androidx.lifecycle.ViewModel
 import pl.humberd.salary_comparator.ui.components.AmountUnit
 
 class MainFormViewModel : ViewModel() {
-    private val _sourceCurrency = MutableLiveData("PLN")
+    private val _sourceCurrency = MutableLiveData("EUR")
     val sourceCurrency: LiveData<String> = _sourceCurrency
 
-    private val _targetCurrency = MutableLiveData("EUR")
+    private val _targetCurrency = MutableLiveData("PLN")
     val targetCurrency: LiveData<String> = _targetCurrency
 
-    private val _amount = MutableLiveData("0")
+    private val _amount = MutableLiveData("4500")
     val amount: LiveData<String> = _amount
 
     private val _unit = MutableLiveData(AmountUnit.MONTH)
