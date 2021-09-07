@@ -18,8 +18,8 @@ class MainFormViewModel : ViewModel() {
     private val _unit = MutableLiveData(AmountUnit.MONTH)
     val unit: LiveData<AmountUnit> = _unit
 
-    private val _result = MutableLiveData<Map<AmountUnit, List<Pair<Currency, Int>>>>(emptyMap())
-    val result: LiveData<Map<AmountUnit, List<Pair<Currency, Int>>>> = _result
+    private val _result = MutableLiveData<Map<AmountUnit, List<Pair<Currency, Float>>>>(emptyMap())
+    val result: LiveData<Map<AmountUnit, List<Pair<Currency, Float>>>> = _result
 
     fun updateSourceCurrency(new: String) {
         _sourceCurrency.value = new
@@ -44,13 +44,21 @@ class MainFormViewModel : ViewModel() {
     }
 
     fun convert() {
+        val sanitizedAmount = amount.value?.toInt() ?: throw Error()
+        val sanitizedUnit = unit.value ?: throw Error()
+        val amountPerHour = sanitizedAmount / sanitizedUnit.hours.toFloat()
+
         val map = AmountUnit.values().map {
             it to listOf(
-                Pair(sourceCurrency.value.orEmpty(), 0),
-                Pair(targetCurrency.value.orEmpty(), 0)
+                Pair(sourceCurrency.value.orEmpty(), it.hours * amountPerHour),
+                Pair(targetCurrency.value.orEmpty(), it.hours * amountPerHour)
             )
         }.toTypedArray()
 
         _result.value = mapOf(*map)
+    }
+
+    private fun foo() {
+
     }
 }

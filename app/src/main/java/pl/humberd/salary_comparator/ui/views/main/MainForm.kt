@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.humberd.salary_comparator.R
 import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.ui.components.AmountUnit
@@ -28,7 +29,7 @@ import pl.humberd.salary_comparator.ui.components.DropdownItemModel
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
 @Composable
-fun MainForm(viewModel: MainFormViewModel = MainFormViewModel()) {
+fun MainForm(viewModel: MainFormViewModel = viewModel()) {
     val sourceCurrency by viewModel.sourceCurrency.observeAsState("")
     val targetCurrency by viewModel.targetCurrency.observeAsState("")
     val value by viewModel.amount.observeAsState("")
