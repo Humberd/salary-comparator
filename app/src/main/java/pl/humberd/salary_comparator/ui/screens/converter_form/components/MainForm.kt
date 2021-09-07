@@ -26,10 +26,11 @@ import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.ui.components.AmountUnit
 import pl.humberd.salary_comparator.ui.components.Dropdown
 import pl.humberd.salary_comparator.ui.components.DropdownItemModel
+import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormViewModel
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
 @Composable
-fun MainForm(viewModel: MainFormViewModel = viewModel()) {
+fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
     val sourceCurrency by viewModel.sourceCurrency.observeAsState("")
     val targetCurrency by viewModel.targetCurrency.observeAsState("")
     val value by viewModel.amount.observeAsState("")

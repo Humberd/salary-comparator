@@ -1,11 +1,12 @@
-package pl.humberd.salary_comparator.ui.views.main
+package pl.humberd.salary_comparator.ui.screens.converter_form
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import pl.humberd.salary_comparator.ui.components.AmountUnit
+import pl.humberd.salary_comparator.ui.views.main.Currency
 
-class MainFormViewModel : ViewModel() {
+class ConverterFormViewModel : ViewModel() {
     private val _sourceCurrency = MutableLiveData("EUR")
     val sourceCurrency: LiveData<String> = _sourceCurrency
 
