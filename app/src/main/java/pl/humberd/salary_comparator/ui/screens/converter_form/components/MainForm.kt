@@ -80,7 +80,6 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(bottom = 16.dp)
         ) {
             val focusManager = LocalFocusManager.current
 
@@ -119,7 +118,9 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
 
         OutlinedButton(
             onClick = { viewModel.convert() },
-            modifier = Modifier.align(CenterHorizontally)
+            modifier = Modifier
+                .align(CenterHorizontally)
+                .padding(bottom = 16.dp, top = 16.dp)
         ) {
             Text("Convert")
         }

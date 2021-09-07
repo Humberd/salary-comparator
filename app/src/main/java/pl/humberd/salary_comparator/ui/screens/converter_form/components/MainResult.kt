@@ -27,16 +27,6 @@ fun MainResult(
     val columnLabels = setOf("") + uniqueLabels
 
     if (results.isEmpty()) {
-        Column(
-            Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "No data",
-                modifier = Modifier.padding(16.dp)
-                    .align(CenterHorizontally)
-            )
-        }
-
         return
     }
 
