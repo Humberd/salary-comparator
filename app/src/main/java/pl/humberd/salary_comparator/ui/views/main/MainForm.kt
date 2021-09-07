@@ -116,7 +116,7 @@ fun MainForm(viewModel: MainFormViewModel = MainFormViewModel()) {
         }
 
         OutlinedButton(
-            onClick = { /*TODO*/ },
+            onClick = { viewModel.convert() },
             modifier = Modifier.align(CenterHorizontally)
         ) {
             Text("Convert")

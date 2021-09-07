@@ -6,8 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
-import pl.humberd.salary_comparator.ui.views.main.MainForm
-import pl.humberd.salary_comparator.ui.views.main.MainResult
+import pl.humberd.salary_comparator.ui.views.main.MainView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,8 +15,7 @@ class MainActivity : ComponentActivity() {
             SalarycomparatorTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    MainForm()
-                    MainResult(emptyMap())
+                    MainView()
                 }
             }
         }
