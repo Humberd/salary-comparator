@@ -1,4 +1,4 @@
-package pl.humberd.salary_comparator.ui.views.main
+package pl.humberd.salary_comparator.ui.screens.converter_form.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text

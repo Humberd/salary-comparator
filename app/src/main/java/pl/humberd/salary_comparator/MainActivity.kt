@@ -13,9 +13,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import pl.humberd.salary_comparator.ui.components.BottomBar
 import pl.humberd.salary_comparator.ui.screens.Screen
+import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormScreen
 import pl.humberd.salary_comparator.ui.screens.currency_exchange.CurrencyExchangeScreen
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
-import pl.humberd.salary_comparator.ui.views.main.ConverterFormScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

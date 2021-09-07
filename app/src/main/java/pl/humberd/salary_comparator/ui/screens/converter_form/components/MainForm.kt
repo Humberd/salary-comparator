@@ -1,4 +1,4 @@
-package pl.humberd.salary_comparator.ui.views.main
+package pl.humberd.salary_comparator.ui.screens.converter_form.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -130,6 +130,6 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
 @Composable
 fun PreviewMainForm() {
     SalarycomparatorTheme {
-        MainForm()
+        MainForm(ConverterFormViewModel())
     }
 }
