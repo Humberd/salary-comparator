@@ -13,7 +13,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -22,12 +21,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.humberd.salary_comparator.R
-import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.ui.components.AmountUnit
+import pl.humberd.salary_comparator.ui.components.CURRENCIES
 import pl.humberd.salary_comparator.ui.components.Dropdown
 import pl.humberd.salary_comparator.ui.components.DropdownItemModel
 import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormViewModel
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import java.util.*
 
 @Composable
 fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
@@ -45,8 +45,19 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
             ) {
                 Dropdown(
                     label = "From",
-                    items = CurrencyService.getAvailableCurrencies(LocalContext.current)
-                        .map { DropdownItemModel(it.name, it.icon) },
+                    items = CURRENCIES
+                        .map {
+                            DropdownItemModel(
+                                "${it.value} (${
+                                    it.key.uppercase(
+                                        Locale.getDefault()
+                                    )
+                                })",
+                                it.key,
+                                null
+                            )
+                        }
+                        .sortedBy { it.name },
                     value = sourceCurrency,
                     onValueChange = {
                         viewModel.updateSourceCurrency(it)
@@ -69,8 +80,19 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
             ) {
                 Dropdown(
                     label = "To",
-                    items = CurrencyService.getAvailableCurrencies(LocalContext.current)
-                        .map { DropdownItemModel(it.name, it.icon) },
+                    items = CURRENCIES
+                        .map {
+                            DropdownItemModel(
+                                "${it.value} (${
+                                    it.key.uppercase(
+                                        Locale.getDefault()
+                                    )
+                                })",
+                                it.key,
+                                null
+                            )
+                        }
+                        .sortedBy { it.name },
                     value = targetCurrency,
                     onValueChange = {
                         viewModel.updateTargetCurrency(it)
@@ -106,7 +128,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
             ) {
                 Dropdown(
                     items = AmountUnit.values().map {
-                        DropdownItemModel(it.name, null)
+                        DropdownItemModel(it.name, it.name, null)
                     },
                     value = unit.toString(),
                     onValueChange = {

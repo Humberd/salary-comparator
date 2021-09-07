@@ -23,6 +23,7 @@ import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
 data class DropdownItemModel(
     val name: String,
+    val value: String,
     val icon: Int?
 )
 
@@ -79,7 +80,7 @@ fun Dropdown(
                 model = it,
                 onClick = {
                     expanded = false
-                    onValueChange(it.name)
+                    onValueChange(it.value)
                 }
             )
         }
@@ -121,7 +122,7 @@ fun PreviewDropdown() {
         Dropdown(
             label = "From",
             items = CurrencyService.getAvailableCurrencies(LocalContext.current)
-                .map { DropdownItemModel(it.name, it.icon) },
+                .map { DropdownItemModel(it.name, it.name, it.icon) },
             value = state,
             onValueChange = {
                 println(FlagKit.getResId(context, "pl"))
@@ -136,7 +137,7 @@ fun PreviewDropdown() {
 fun PreviewDropdownItem() {
     SalarycomparatorTheme {
         DropdownItem(
-            DropdownItemModel("PLN", FlagKit.getResId(LocalContext.current, "pl")),
+            DropdownItemModel("Poland (PLN)", "PLN", FlagKit.getResId(LocalContext.current, "pl")),
             onClick = {}
         )
     }
