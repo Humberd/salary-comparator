@@ -14,7 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import pl.humberd.salary_comparator.ui.components.BottomBar
 import pl.humberd.salary_comparator.ui.screens.Screen
 import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormScreen
-import pl.humberd.salary_comparator.ui.screens.currency_exchange.CurrencyExchangeScreen
+import pl.humberd.salary_comparator.ui.screens.settings.SettingsScreen
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
 class MainActivity : ComponentActivity() {
@@ -38,8 +38,8 @@ class MainActivity : ComponentActivity() {
                             composable(Screen.CONVERTER_FORM.route) {
                                 ConverterFormScreen()
                             }
-                            composable(Screen.CURRENCY_EXCHANGE.route) {
-                                CurrencyExchangeScreen()
+                            composable(Screen.SETTINGS.route) {
+                                SettingsScreen()
                             }
                         }
                     }

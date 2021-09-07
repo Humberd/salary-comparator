@@ -20,7 +20,7 @@ import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 fun BottomBar(navController: NavController) {
     val menuItems = listOf(
         Screen.CONVERTER_FORM,
-        Screen.CURRENCY_EXCHANGE
+        Screen.SETTINGS
     )
 
     BottomNavigation {
