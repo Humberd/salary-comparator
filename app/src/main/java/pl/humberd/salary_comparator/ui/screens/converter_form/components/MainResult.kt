@@ -1,12 +1,14 @@
 package pl.humberd.salary_comparator.ui.screens.converter_form.components
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.humberd.salary_comparator.ui.components.AmountUnit
@@ -64,17 +66,18 @@ fun RowScope.TableCell(
     alignment: Alignment.Horizontal = Alignment.Start,
     isLabel: Boolean = false
 ) {
-    Column(
-        modifier = Modifier
-            .weight(1f)
-            .height(30.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = alignment
-    ) {
-        Text(
-            text = text,
-            color = if (isLabel) Color.Gray else Color.Unspecified
-        )
+    CompositionLocalProvider(LocalContentAlpha provides if (isLabel) ContentAlpha.medium else ContentAlpha.high) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .height(30.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = alignment
+        ) {
+            Text(
+                text = text,
+            )
+        }
     }
 }
 

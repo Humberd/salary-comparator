@@ -1,11 +1,9 @@
 package pl.humberd.salary_comparator.ui.screens.converter_form
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -29,19 +27,20 @@ fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel()) {
     ) {
         Column {
             if (result.isEmpty()) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 64.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Icon(
-                        painterResource(R.drawable.ic_baseline_table_view_24),
-                        contentDescription = "",
-                        modifier = Modifier.size(120.dp),
-                        tint = LocalContentColor.current.copy(alpha = 0.4f)
-                    )
-                    Text("Fill the form below")
+                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.disabled) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 64.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Icon(
+                            painterResource(R.drawable.ic_baseline_table_view_24),
+                            contentDescription = "",
+                            modifier = Modifier.size(120.dp),
+                        )
+                        Text("Fill the form below")
+                    }
                 }
             } else {
                 Column(
