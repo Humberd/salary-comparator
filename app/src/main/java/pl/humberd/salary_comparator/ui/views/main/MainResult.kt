@@ -1,18 +1,17 @@
 package pl.humberd.salary_comparator.ui.views.main
 
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.humberd.salary_comparator.ui.components.AmountUnit
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import java.util.*
 
 typealias Currency = String;
 
@@ -32,33 +31,47 @@ fun MainResult(
             columnLabels.forEach {
                 TableCell(
                     text = it,
-                    textAlign = TextAlign.Center,
+                    alignment = CenterHorizontally,
                     isLabel = true
                 )
             }
         }
         rowLabels.forEach {
             Row {
-
+                TableCell(
+                    text = it.name.lowercase(Locale.getDefault()),
+                    isLabel = true
+                )
+                results[it].orEmpty().forEach {
+                    TableCell(
+                        text = it.second.toString(),
+                        alignment = CenterHorizontally,
+                        isLabel = false
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun TableCell(
+fun RowScope.TableCell(
     text: String,
-    textAlign: TextAlign = TextAlign.Start,
+    alignment: Alignment.Horizontal = Alignment.Start,
     isLabel: Boolean = false
 ) {
-    Text(
-        text = text,
+    Column(
         modifier = Modifier
-            .width(50.dp)
-            .border(0.5.dp, Color.Black),
-        textAlign = textAlign,
-        color = if (isLabel) Color.Gray else Color.Unspecified
-    )
+            .weight(1f)
+            .height(30.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = alignment
+    ) {
+        Text(
+            text = text,
+            color = if (isLabel) Color.Gray else Color.Unspecified
+        )
+    }
 }
 
 @Preview(showBackground = true)
