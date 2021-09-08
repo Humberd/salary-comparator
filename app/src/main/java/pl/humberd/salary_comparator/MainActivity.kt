@@ -18,7 +18,6 @@ import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.ui.components.BottomBar
-import pl.humberd.salary_comparator.ui.components.DialogDropdownScreen
 import pl.humberd.salary_comparator.ui.screens.Dialog
 import pl.humberd.salary_comparator.ui.screens.Screen
 import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormScreen
@@ -70,18 +69,11 @@ class MainActivity : ComponentActivity() {
                             composable(Screen.SETTINGS.route) {
                                 SettingsScreen()
                             }
-
                             dialog(
                                 Dialog.DROPDOWN.route,
                                 dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
                             ) {
-                                val dialogRef = remember {
-                                    val result = Dialog.DROPDOWN.result
-                                    check(result != null)
-                                    result
-                                }
-
-                                DialogDropdownScreen(dialogRef)
+                                Dialog.DROPDOWN.content?.invoke()
                             }
                         }
                     }

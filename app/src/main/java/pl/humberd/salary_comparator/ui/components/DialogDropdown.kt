@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import pl.humberd.salary_comparator.ui.screens.Dialog
 import pl.humberd.salary_comparator.ui.screens.DialogRef
-import pl.humberd.salary_comparator.ui.screens.DropdownInput
 import pl.humberd.salary_comparator.ui.screens.DropdownOutput
 
 @Composable
@@ -26,8 +25,17 @@ fun DialogDropdown(
 ) {
     TextButton(
         onClick = {
-            Dialog.DROPDOWN.open(navController, DropdownInput(value)) {
-
+            Dialog.DROPDOWN.open(
+                navController,
+                onClose = {
+                    when (it) {
+                        is DropdownOutput.SELECTED -> onValueChange(it.id)
+                        else -> {
+                        }
+                    }
+                }
+            ) {
+                DialogDropdownScreen(it, value, items)
             }
         },
     ) {
@@ -55,14 +63,18 @@ fun DialogDropdown(
 }
 
 @Composable
-fun DialogDropdownScreen(dialogRef: DialogRef<DropdownInput, DropdownOutput>) {
+fun DialogDropdownScreen(
+    dialogRef: DialogRef<DropdownOutput>,
+    value: String,
+    items: List<DropdownItemModel>
+) {
     Surface(
         Modifier
             .fillMaxSize()
             .fillMaxWidth()
     ) {
         Column {
-            Text("selectedId = ${dialogRef.input.selectedId}")
+            Text("selectedId = ${value}")
             Button(onClick = {
                 dialogRef.close(DropdownOutput.SELECTED(""))
 

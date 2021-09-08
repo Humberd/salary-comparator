@@ -1,5 +1,6 @@
 package pl.humberd.salary_comparator.ui.screens
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import pl.humberd.salary_comparator.R
 
@@ -17,8 +18,7 @@ sealed class Screen(val route: String, val name: String, val icon: Int) {
     )
 }
 
-data class DialogRef<out INPUT, in OUTPUT>(
-    val input: INPUT,
+data class DialogRef<in OUTPUT>(
     private val onClose: (OUTPUT) -> Unit
 ) {
     fun close(result: OUTPUT) {
@@ -26,7 +26,6 @@ data class DialogRef<out INPUT, in OUTPUT>(
     }
 }
 
-data class DropdownInput(val selectedId: String)
 sealed class DropdownOutput {
     class CANCELLED : DropdownOutput()
     class SELECTED(val id: String): DropdownOutput()
@@ -34,14 +33,18 @@ sealed class DropdownOutput {
 
 sealed class Dialog(val route: String) {
     object DROPDOWN : Dialog("dropdown") {
-        var result: DialogRef<DropdownInput, DropdownOutput>? = null
+        var content: (@Composable () -> Unit)? = null
             private set
 
-        fun open(navController: NavController, input: DropdownInput, onClose: (DropdownOutput) -> Unit = {}) {
-            result = DialogRef(input) {
-                result = null
+        fun open(navController: NavController, onClose: (DropdownOutput) -> Unit = {}, content: @Composable (DialogRef<DropdownOutput>) -> Unit) {
+            val dialogRef = DialogRef<DropdownOutput> {
                 navController.popBackStack()
                 onClose(it)
+                this.content = null
+            }
+
+            this.content = {
+                content(dialogRef)
             }
 
             navController.navigate(
