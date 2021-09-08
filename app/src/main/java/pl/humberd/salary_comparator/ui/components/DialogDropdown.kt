@@ -1,20 +1,33 @@
 package pl.humberd.salary_comparator.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.ui.screens.Dialog
 import pl.humberd.salary_comparator.ui.screens.DialogRef
 import pl.humberd.salary_comparator.ui.screens.DropdownOutput
 
+@ExperimentalComposeUiApi
 @Composable
 fun DialogDropdown(
     navController: NavController,
@@ -30,8 +43,6 @@ fun DialogDropdown(
                 onClose = {
                     when (it) {
                         is DropdownOutput.SELECTED -> onValueChange(it.id)
-                        else -> {
-                        }
                     }
                 }
             ) {
@@ -62,24 +73,77 @@ fun DialogDropdown(
     }
 }
 
+@ExperimentalComposeUiApi
 @Composable
 fun DialogDropdownScreen(
     dialogRef: DialogRef<DropdownOutput>,
     value: String,
     items: List<DropdownItemModel>
 ) {
-    Surface(
-        Modifier
-            .fillMaxSize()
-            .fillMaxWidth()
-    ) {
-        Column {
-            Text("selectedId = ${value}")
-            Button(onClick = {
-                dialogRef.close(DropdownOutput.SELECTED(""))
+    val scope = rememberCoroutineScope()
+    var searchValue by remember { mutableStateOf(value) }
 
-            }) {
-                Text("close me")
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val focusRequester = remember { FocusRequester() }
+
+    DisposableEffect(Unit) {
+        var isDisposed = false
+        scope.launch {
+            delay(10)
+            if (isDisposed) return@launch
+            focusRequester.requestFocus()
+            keyboardController?.show()
+        }
+        onDispose {
+            isDisposed = true
+        }
+    }
+
+    Surface(Modifier.fillMaxSize()) {
+        Column(
+        ) {
+            Column {
+                Text("selectedId = ${value}")
+                Button(onClick = {
+                    dialogRef.close(DropdownOutput.SELECTED(""))
+
+                }) {
+                    Text("close me")
+                }
+            }
+
+            Column {
+                TextField(
+                    value = searchValue,
+                    onValueChange = { searchValue = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(focusRequester),
+                    placeholder = { Text("Search...") },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Rounded.ArrowBack,
+                            contentDescription = "",
+                            Modifier.clickable { dialogRef.close(DropdownOutput.CANCELLED()) }
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Search
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onSearch = {}
+                    ),
+                    singleLine = true,
+                    trailingIcon = {
+                        if (searchValue.isNotEmpty()) {
+                            Icon(
+                                Icons.Rounded.Close,
+                                contentDescription = "",
+                                Modifier.clickable { searchValue = "" }
+                            )
+                        }
+                    },
+                )
             }
         }
     }

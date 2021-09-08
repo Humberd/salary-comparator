@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -28,6 +29,7 @@ import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormViewM
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 import java.util.*
 
+@ExperimentalComposeUiApi
 @Composable
 fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: NavController) {
     val sourceCurrency by viewModel.sourceCurrency.observeAsState("")
@@ -105,9 +107,9 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
         ) {
             val focusManager = LocalFocusManager.current
 
-            OutlinedTextField(
+            TextField(
                 modifier = Modifier.weight(0.5f),
-                label = { Text("Amount") },
+                placeholder = { Text("Amount") },
                 value = value,
                 onValueChange = {
                     viewModel.updateValue(it)
@@ -120,7 +122,9 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                     onDone = {
                         focusManager.clearFocus()
                     }
-                )
+                ),
+                singleLine = true,
+                shape = MaterialTheme.shapes.large,
             )
 
             Column(
@@ -149,6 +153,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
     }
 }
 
+@ExperimentalComposeUiApi
 @Preview(showBackground = true)
 @Composable
 fun PreviewMainForm() {
