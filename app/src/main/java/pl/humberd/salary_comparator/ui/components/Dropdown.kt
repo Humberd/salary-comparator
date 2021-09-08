@@ -121,8 +121,8 @@ fun PreviewDropdown() {
         val context = LocalContext.current
         Dropdown(
             label = "From",
-            items = CurrencyService.getAvailableCurrencies(LocalContext.current)
-                .map { DropdownItemModel(it.name, it.name, it.icon) },
+            items = CurrencyService.getCurrencies()
+                .map { DropdownItemModel(it.name, it.name, null) },
             value = state,
             onValueChange = {
                 println(FlagKit.getResId(context, "pl"))

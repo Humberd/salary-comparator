@@ -3,8 +3,10 @@ package pl.humberd.salary_comparator.ui.screens.converter_form
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.ui.components.AmountUnit
 import pl.humberd.salary_comparator.ui.screens.converter_form.components.Currency
+import java.util.*
 
 class ConverterFormViewModel : ViewModel() {
     private val _sourceCurrency = MutableLiveData("EUR")
@@ -50,9 +52,13 @@ class ConverterFormViewModel : ViewModel() {
         val amountPerHour = sanitizedAmount / sanitizedUnit.hours.toFloat()
 
         val map = AmountUnit.values().map {
+            val source = sourceCurrency.value.orEmpty().lowercase(Locale.getDefault())
+            val target = targetCurrency.value.orEmpty().lowercase(Locale.getDefault())
+
+            val eur = CurrencyService.get("eur")!!
             it to listOf(
-                Pair(sourceCurrency.value.orEmpty(), it.hours * amountPerHour),
-                Pair(targetCurrency.value.orEmpty(), it.hours * amountPerHour)
+                Pair(source, it.hours * amountPerHour * (CurrencyService.get(source)!!.getRate() / eur.getRate())),
+                Pair(target, it.hours * amountPerHour * (CurrencyService.get(target)!!.getRate() / eur.getRate()))
             )
         }.toTypedArray()
 

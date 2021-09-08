@@ -48,12 +48,12 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
                     items = CURRENCIES
                         .map {
                             DropdownItemModel(
-                                "${it.value} (${
-                                    it.key.uppercase(
+                                "${it.name} (${
+                                    it.id.uppercase(
                                         Locale.getDefault()
                                     )
                                 })",
-                                it.key,
+                                it.id,
                                 null
                             )
                         }
@@ -83,12 +83,12 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
                     items = CURRENCIES
                         .map {
                             DropdownItemModel(
-                                "${it.value} (${
-                                    it.key.uppercase(
+                                "${it.name} (${
+                                    it.id.uppercase(
                                         Locale.getDefault()
                                     )
                                 })",
-                                it.key,
+                                it.id,
                                 null
                             )
                         }
