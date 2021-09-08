@@ -11,13 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.humberd.salary_comparator.R
 import pl.humberd.salary_comparator.ui.screens.converter_form.components.MainForm
 import pl.humberd.salary_comparator.ui.screens.converter_form.components.MainResult
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
 @Composable
-fun ConverterFormScreen(viewModel: ConverterFormViewModel = ConverterFormViewModel()) {
+fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel()) {
     val result by viewModel.result.observeAsState(emptyMap())
 
     Column(

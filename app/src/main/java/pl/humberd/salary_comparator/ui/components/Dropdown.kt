@@ -116,7 +116,6 @@ fun DropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
 fun PreviewDropdown() {
     var state by remember { mutableStateOf("PLN") }
 
-
     SalarycomparatorTheme {
         val context = LocalContext.current
         Dropdown(
