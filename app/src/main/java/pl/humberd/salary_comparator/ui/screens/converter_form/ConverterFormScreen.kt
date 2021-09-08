@@ -7,6 +7,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -19,6 +20,7 @@ import pl.humberd.salary_comparator.ui.screens.converter_form.components.MainFor
 import pl.humberd.salary_comparator.ui.screens.converter_form.components.MainResult
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
+@ExperimentalComposeUiApi
 @Composable
 fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel(), navController: NavController) {
     val result by viewModel.result.observeAsState(emptyMap())
@@ -62,6 +64,7 @@ fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel(), navCont
     }
 }
 
+@ExperimentalComposeUiApi
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PreviewConverterFormScreen() {
