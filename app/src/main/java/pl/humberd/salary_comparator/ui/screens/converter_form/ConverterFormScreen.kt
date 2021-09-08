@@ -8,17 +8,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import pl.humberd.salary_comparator.R
 import pl.humberd.salary_comparator.ui.screens.converter_form.components.MainForm
 import pl.humberd.salary_comparator.ui.screens.converter_form.components.MainResult
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
 @Composable
-fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel()) {
+fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel(), navController: NavController) {
     val result by viewModel.result.observeAsState(emptyMap())
 
     Column(
@@ -54,7 +56,7 @@ fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel()) {
         Column {
             Divider(Modifier.padding(bottom = 8.dp))
             Column(Modifier.padding(horizontal = 8.dp)) {
-                MainForm(viewModel)
+                MainForm(viewModel, navController)
             }
         }
     }
@@ -64,6 +66,6 @@ fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel()) {
 @Composable
 fun PreviewConverterFormScreen() {
     SalarycomparatorTheme {
-        ConverterFormScreen(ConverterFormViewModel())
+        ConverterFormScreen(ConverterFormViewModel(), NavController(LocalContext.current))
     }
 }

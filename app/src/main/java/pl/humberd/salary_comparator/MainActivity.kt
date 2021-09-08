@@ -4,26 +4,30 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material.*
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.ui.components.BottomBar
+import pl.humberd.salary_comparator.ui.components.DialogDropdownScreen
+import pl.humberd.salary_comparator.ui.screens.Dialog
 import pl.humberd.salary_comparator.ui.screens.Screen
 import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormScreen
 import pl.humberd.salary_comparator.ui.screens.settings.SettingsScreen
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
 
+@ExperimentalComposeUiApi
+@ExperimentalMaterialApi
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +42,9 @@ class MainActivity : ComponentActivity() {
                     try {
                         CurrencyService.updateFromJsonFile(context)
                     } catch (e: Error) {
-                        scaffoldState.snackbarHostState.showSnackbar(e.message ?: "Failed to load default exchange rate", "Close")
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            e.message ?: "Failed to load default exchange rate", "Close"
+                        )
                     }
                 }
             }
@@ -59,10 +65,23 @@ class MainActivity : ComponentActivity() {
                             Modifier.padding(innerPadding)
                         ) {
                             composable(Screen.CONVERTER_FORM.route) {
-                                ConverterFormScreen()
+                                ConverterFormScreen(navController = navController)
                             }
                             composable(Screen.SETTINGS.route) {
                                 SettingsScreen()
+                            }
+
+                            dialog(
+                                Dialog.DROPDOWN.route,
+                                dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+                            ) {
+                                val dialogRef = remember {
+                                    val result = Dialog.DROPDOWN.result
+                                    check(result != null)
+                                    result
+                                }
+
+                                DialogDropdownScreen(dialogRef)
                             }
                         }
                     }

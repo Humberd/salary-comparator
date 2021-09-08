@@ -13,6 +13,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
@@ -20,17 +21,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import pl.humberd.salary_comparator.R
-import pl.humberd.salary_comparator.ui.components.AmountUnit
-import pl.humberd.salary_comparator.ui.components.CURRENCIES
-import pl.humberd.salary_comparator.ui.components.Dropdown
-import pl.humberd.salary_comparator.ui.components.DropdownItemModel
+import pl.humberd.salary_comparator.ui.components.*
 import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormViewModel
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 import java.util.*
 
 @Composable
-fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
+fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: NavController) {
     val sourceCurrency by viewModel.sourceCurrency.observeAsState("")
     val targetCurrency by viewModel.targetCurrency.observeAsState("")
     val value by viewModel.amount.observeAsState("")
@@ -43,7 +42,8 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
             Column(
                 Modifier.weight(0.5f),
             ) {
-                Dropdown(
+                DialogDropdown(
+                    navController = navController,
                     label = "From",
                     items = CURRENCIES
                         .map {
@@ -153,6 +153,6 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel()) {
 @Composable
 fun PreviewMainForm() {
     SalarycomparatorTheme {
-        MainForm(ConverterFormViewModel())
+        MainForm(ConverterFormViewModel(), NavController(LocalContext.current))
     }
 }
