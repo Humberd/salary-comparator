@@ -9,10 +9,10 @@ import pl.humberd.salary_comparator.ui.screens.converter_form.components.Currenc
 import java.util.*
 
 class ConverterFormViewModel : ViewModel() {
-    private val _sourceCurrency = MutableLiveData("EUR")
+    private val _sourceCurrency = MutableLiveData("eur")
     val sourceCurrency: LiveData<String> = _sourceCurrency
 
-    private val _targetCurrency = MutableLiveData("PLN")
+    private val _targetCurrency = MutableLiveData("pln")
     val targetCurrency: LiveData<String> = _targetCurrency
 
     private val _amount = MutableLiveData("4500")
@@ -21,8 +21,8 @@ class ConverterFormViewModel : ViewModel() {
     private val _unit = MutableLiveData(AmountUnit.MONTH)
     val unit: LiveData<AmountUnit> = _unit
 
-    private val _result = MutableLiveData<Map<AmountUnit, List<Pair<Currency, Float>>>>(emptyMap())
-    val result: LiveData<Map<AmountUnit, List<Pair<Currency, Float>>>> = _result
+    private val _result = MutableLiveData<Map<AmountUnit, List<Pair<Currency, Double>>>>(emptyMap())
+    val result: LiveData<Map<AmountUnit, List<Pair<Currency, Double>>>> = _result
 
     fun updateSourceCurrency(new: String) {
         _sourceCurrency.value = new
@@ -47,25 +47,49 @@ class ConverterFormViewModel : ViewModel() {
     }
 
     fun convert() {
-        val sanitizedAmount = amount.value?.toInt() ?: throw Error()
-        val sanitizedUnit = unit.value ?: throw Error()
-        val amountPerHour = sanitizedAmount / sanitizedUnit.hours.toFloat()
+        val sourceAmount = amount.value.let {
+            check(it != null)
+            it.toDoubleOrNull().let {
+                check(it != null)
+                it
+            }
+        }
+        val sourceUnit = unit.value.let {
+            check(it != null)
+            it
+        }
+        val sourceAmountPerHour = sourceAmount / sourceUnit.hours
+
+        val sourceCurrency = this.sourceCurrency.value.let {
+            check(it != null)
+            it.lowercase(Locale.getDefault())
+        }
+        val targetCurrency = this.targetCurrency.value.let {
+            check(it != null)
+            it.lowercase(Locale.getDefault())
+        }
 
         val map = AmountUnit.values().map {
-            val source = sourceCurrency.value.orEmpty().lowercase(Locale.getDefault())
-            val target = targetCurrency.value.orEmpty().lowercase(Locale.getDefault())
-
-            val eur = CurrencyService.get("eur")!!
             it to listOf(
-                Pair(source, it.hours * amountPerHour * (CurrencyService.get(source)!!.getRate() / eur.getRate())),
-                Pair(target, it.hours * amountPerHour * (CurrencyService.get(target)!!.getRate() / eur.getRate()))
+                Pair(sourceCurrency, it.hours * sourceAmountPerHour),
+                Pair(
+                    targetCurrency, it.hours * calculateTargetAmountPerHour(
+                        sourceAmountPerHour,
+                        CurrencyService.get(sourceCurrency)?.getRate()!!,
+                        CurrencyService.get(targetCurrency)?.getRate()!!
+                    )
+                )
             )
         }.toTypedArray()
 
         _result.value = mapOf(*map)
     }
 
-    private fun foo() {
-
+    private fun calculateTargetAmountPerHour(
+        sourceAmount: Double,
+        sourceRate: Double,
+        targetRate: Double
+    ): Double {
+        return (sourceAmount * targetRate) / sourceRate
     }
 }

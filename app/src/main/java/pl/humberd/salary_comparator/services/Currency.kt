@@ -4,13 +4,13 @@ data class Currency(
     val id: String,
     val name: String
 ) {
-    private var to1EuroRate: Float = -1f
+    private var to1EuroRate: Double = -1.0
 
-    fun updateRate(rate: Float) {
+    fun updateRate(rate: Double) {
         to1EuroRate = rate
     }
 
-    fun getRate(): Float {
+    fun getRate(): Double {
         return to1EuroRate
     }
 }

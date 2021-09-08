@@ -19,7 +19,7 @@ typealias Currency = String;
 
 @Composable
 fun MainResult(
-    results: Map<AmountUnit, List<Pair<Currency, Float>>>
+    results: Map<AmountUnit, List<Pair<Currency, Double>>>
 ) {
     val rowLabels = results.keys
     val uniqueLabels = results.values
@@ -88,20 +88,20 @@ fun PreviewMainResult() {
         MainResult(
             mapOf(
                 AmountUnit.HOUR to listOf(
-                    Pair("EUR", 10f),
-                    Pair("PLN", 40f)
+                    Pair("EUR", 10.0),
+                    Pair("PLN", 40.0)
                 ),
                 AmountUnit.DAY to listOf(
-                    Pair("EUR", 80f),
-                    Pair("PLN", 320f)
+                    Pair("EUR", 80.0),
+                    Pair("PLN", 320.0)
                 ),
                 AmountUnit.MONTH to listOf(
-                    Pair("EUR", 1600f),
-                    Pair("PLN", 8000f)
+                    Pair("EUR", 1600.0),
+                    Pair("PLN", 8000.0)
                 ),
                 AmountUnit.YEAR to listOf(
-                    Pair("EUR", 19_200f),
-                    Pair("PLN", 76_800f)
+                    Pair("EUR", 19_200.0),
+                    Pair("PLN", 76_800.0)
                 ),
             )
         )

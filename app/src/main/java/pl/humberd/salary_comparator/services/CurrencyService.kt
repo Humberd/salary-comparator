@@ -37,7 +37,7 @@ object CurrencyService {
         val eurRates = obj.getJSONObject("eur")
         lastUpdate = obj.getString("date")
         eurRates.keys().forEach {
-            val rate = eurRates.getDouble(it).toFloat()
+            val rate = eurRates.getDouble(it)
             cacheMap[it]?.updateRate(rate)
         }
     }
