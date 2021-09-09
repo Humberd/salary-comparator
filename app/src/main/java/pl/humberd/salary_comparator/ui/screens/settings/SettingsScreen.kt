@@ -10,13 +10,13 @@ import pl.humberd.salary_comparator.ui.screens.settings.components.SettingCell
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
 @Composable
-fun SettingsScreen(viewModel: SettingsViewModel = viewModel()){
+fun SettingsScreen(viewModel: SettingsViewModel = viewModel()) {
     Column {
         SettingCell(
             primaryText = "Currency Exchange Rate",
             secondaryText = "Last update 3 months ago",
         ) {
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = { viewModel.updateExchangeRate() }) {
                 Text("Update")
             }
         }

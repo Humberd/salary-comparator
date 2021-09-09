@@ -60,7 +60,7 @@ class MainActivity : ComponentActivity() {
                     ) { innerPadding ->
                         NavHost(
                             navController = navController,
-                            startDestination = Screen.CONVERTER_FORM.route,
+                            startDestination = Screen.SETTINGS.route,
                             Modifier.padding(innerPadding)
                         ) {
                             composable(Screen.CONVERTER_FORM.route) {
