@@ -56,7 +56,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                                     )
                                 })",
                                 it.id,
-                                null
+                                it.getFlagId(LocalContext.current)
                             )
                         }
                         .sortedBy { it.name },

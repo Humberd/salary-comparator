@@ -1,5 +1,6 @@
 package pl.humberd.salary_comparator.ui.components
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,6 +19,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -184,7 +186,6 @@ fun DialogDropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
         Modifier.clickable(onClickLabel = model.name, role = Role.Button) { onClick() }
     ) {
         Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
@@ -192,9 +193,12 @@ fun DialogDropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
         ) {
             if (model.icon != null) {
                 Icon(
-                    painter = painterResource(id = model.icon),
+                    painter = painterResource(model.icon),
                     contentDescription = "",
-                    modifier = Modifier.padding(end = 4.dp)
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .border(0.1.dp, MaterialTheme.colors.onSurface),
+                    tint = Color.Unspecified
                 )
             }
             Text(
