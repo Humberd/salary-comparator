@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -92,6 +93,7 @@ fun DialogDropdownScreen(
     val scope = rememberCoroutineScope()
     var searchValue by remember { mutableStateOf(TextFieldValue("", TextRange(0))) }
     val filteredItems = remember { items.toMutableStateList() }
+    val searchScrollState = rememberLazyListState()
 
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
@@ -100,10 +102,10 @@ fun DialogDropdownScreen(
         val searchLc = searchValue.text.lowercase(Locale.getDefault())
         scope.launch {
             filteredItems.clear()
-            val removeAll = filteredItems.addAll(
+            filteredItems.addAll(
                 items.filter { it.name.lowercase(Locale.getDefault()).contains(searchLc) }
             )
-            println(removeAll)
+            searchScrollState.scrollToItem(0)
         }
     }
 
@@ -162,7 +164,7 @@ fun DialogDropdownScreen(
                 },
             )
 
-            LazyColumn {
+            LazyColumn(state = searchScrollState) {
                 items(filteredItems, { it.value }) {
                     DialogDropdownItem(
                         model = it,
