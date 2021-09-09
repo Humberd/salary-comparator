@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -36,6 +37,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
     val targetCurrency by viewModel.targetCurrency.observeAsState("")
     val value by viewModel.amount.observeAsState("")
     val unit by viewModel.unit.observeAsState(AmountUnit.MONTH)
+    val mostPopularCurrencies = remember { setOf("chf", "eur", "gbp", "usd", "pl") }
 
     Column {
         Row(
@@ -56,7 +58,8 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                                     )
                                 })",
                                 it.id,
-                                it.getFlagId(LocalContext.current)
+                                mostPopular = mostPopularCurrencies.contains(it.id),
+                                icon = it.getFlagId(LocalContext.current)
                             )
                         }
                         .sortedBy { it.name },
@@ -91,7 +94,8 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                                     )
                                 })",
                                 it.id,
-                                null
+                                mostPopular = mostPopularCurrencies.contains(it.id),
+                                icon = null
                             )
                         }
                         .sortedBy { it.name },
@@ -132,7 +136,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
             ) {
                 Dropdown(
                     items = AmountUnit.values().map {
-                        DropdownItemModel(it.name, it.name, null)
+                        DropdownItemModel(it.name, it.name, icon = null)
                     },
                     value = unit.toString(),
                     onValueChange = {

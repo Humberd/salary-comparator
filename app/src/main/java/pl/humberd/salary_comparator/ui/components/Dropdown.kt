@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -24,6 +25,7 @@ import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 data class DropdownItemModel(
     val name: String,
     val value: String,
+    val mostPopular: Boolean = false,
     val icon: Int? = null
 )
 
@@ -101,7 +103,8 @@ fun DropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
                 Icon(
                     painter = painterResource(id = model.icon),
                     contentDescription = "",
-                    modifier = Modifier.padding(end = 4.dp)
+                    modifier = Modifier.padding(end = 4.dp),
+                    tint = Color.Unspecified
                 )
             }
             Text(
@@ -121,7 +124,7 @@ fun PreviewDropdown() {
         Dropdown(
             label = "From",
             items = CurrencyService.getCurrencies()
-                .map { DropdownItemModel(it.name, it.name, null) },
+                .map { DropdownItemModel(it.name, it.name, icon =null) },
             value = state,
             onValueChange = {
                 println(FlagKit.getResId(context, "pl"))
@@ -136,7 +139,7 @@ fun PreviewDropdown() {
 fun PreviewDropdownItem() {
     SalarycomparatorTheme {
         DropdownItem(
-            DropdownItemModel("Poland (PLN)", "PLN", FlagKit.getResId(LocalContext.current, "pl")),
+            DropdownItemModel("Poland (PLN)", "PLN", icon = FlagKit.getResId(LocalContext.current, "pl")),
             onClick = {}
         )
     }
