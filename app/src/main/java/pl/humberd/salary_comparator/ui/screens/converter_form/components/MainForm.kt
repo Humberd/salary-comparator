@@ -146,8 +146,11 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
             }
         }
 
-        OutlinedButton(
+        Button(
             onClick = { viewModel.convert() },
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = MaterialTheme.colors.secondary
+            ),
             modifier = Modifier
                 .align(CenterHorizontally)
                 .padding(bottom = 16.dp, top = 16.dp)
