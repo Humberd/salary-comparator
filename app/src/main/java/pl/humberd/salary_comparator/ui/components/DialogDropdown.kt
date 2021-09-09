@@ -33,6 +33,7 @@ import pl.humberd.salary_comparator.ui.screens.Dialog
 import pl.humberd.salary_comparator.ui.screens.DialogRef
 import pl.humberd.salary_comparator.ui.screens.DropdownOutput
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import java.util.*
 
 @ExperimentalComposeUiApi
 @Composable
@@ -87,13 +88,28 @@ fun DialogDropdownScreen(
     value: String,
     items: List<DropdownItemModel>
 ) {
+
     val scope = rememberCoroutineScope()
-    var searchValue by remember { mutableStateOf(TextFieldValue(value, TextRange(value.length))) }
+    var searchValue by remember { mutableStateOf(TextFieldValue("", TextRange(0))) }
+    val filteredItems = remember { items.toMutableStateList() }
 
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
 
+    fun filterItems() {
+        val searchLc = searchValue.text.lowercase(Locale.getDefault())
+        scope.launch {
+            filteredItems.clear()
+            val removeAll = filteredItems.addAll(
+                items.filter { it.name.lowercase(Locale.getDefault()).contains(searchLc) }
+            )
+            println(removeAll)
+        }
+    }
+
     DisposableEffect(Unit) {
+        filterItems()
+
         var isDisposed = false
         scope.launch {
             delay(10)
@@ -111,7 +127,10 @@ fun DialogDropdownScreen(
             Column {
                 TextField(
                     value = searchValue,
-                    onValueChange = { searchValue = it },
+                    onValueChange = {
+                        searchValue = it
+                        filterItems()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(focusRequester),
@@ -135,7 +154,10 @@ fun DialogDropdownScreen(
                             Icon(
                                 Icons.Rounded.Close,
                                 contentDescription = "",
-                                Modifier.clickable { searchValue = TextFieldValue("") }
+                                Modifier.clickable {
+                                    searchValue = TextFieldValue("")
+                                    filterItems()
+                                }
                             )
                         }
                     },
@@ -143,7 +165,7 @@ fun DialogDropdownScreen(
             }
 
             LazyColumn {
-                items(items, { it.value }) {
+                items(filteredItems, { it.value }) {
                     DialogDropdownItem(
                         model = it,
                         onClick = {
