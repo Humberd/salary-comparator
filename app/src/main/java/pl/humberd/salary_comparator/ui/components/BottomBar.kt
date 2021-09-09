@@ -43,7 +43,6 @@ fun BottomBar(navController: NavController) {
                             saveState = true
                         }
                         launchSingleTop = true
-                        restoreState = true
                     }
                 }
             )
