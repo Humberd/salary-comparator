@@ -158,24 +158,27 @@ fun DialogDropdownScreen(
 
 @Composable
 fun DialogDropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .clickable(onClickLabel = model.name, role = Role.Button) { onClick() }
+    Column(
+        Modifier.clickable(onClickLabel = model.name, role = Role.Button) { onClick() }
     ) {
-        if (model.icon != null) {
-            Icon(
-                painter = painterResource(id = model.icon),
-                contentDescription = "",
-                modifier = Modifier.padding(end = 4.dp)
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            if (model.icon != null) {
+                Icon(
+                    painter = painterResource(id = model.icon),
+                    contentDescription = "",
+                    modifier = Modifier.padding(end = 4.dp)
+                )
+            }
+            Text(
+                model.name,
             )
         }
-        Text(
-            model.name,
-        )
     }
 }
 
@@ -185,7 +188,7 @@ fun DialogDropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
 fun PreviewDialogDropdownScreen() {
     SalarycomparatorTheme {
         DialogDropdownScreen(
-            dialogRef = DialogRef {  },
+            dialogRef = DialogRef { },
             items = listOf(
                 DropdownItemModel("Polish złoty (PLN)", "pln"),
                 DropdownItemModel("Euro (EUR)", "eur"),
