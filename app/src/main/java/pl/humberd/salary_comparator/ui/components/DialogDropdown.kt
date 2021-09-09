@@ -124,45 +124,43 @@ fun DialogDropdownScreen(
 
     Surface(Modifier.fillMaxSize()) {
         Column {
-            Column {
-                TextField(
-                    value = searchValue,
-                    onValueChange = {
-                        searchValue = it
-                        filterItems()
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(focusRequester),
-                    placeholder = { Text("Search...") },
-                    leadingIcon = {
+            TextField(
+                value = searchValue,
+                onValueChange = {
+                    searchValue = it
+                    filterItems()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(focusRequester),
+                placeholder = { Text("Search...") },
+                leadingIcon = {
+                    Icon(
+                        Icons.Rounded.ArrowBack,
+                        contentDescription = "",
+                        Modifier.clickable { dialogRef.close(DropdownOutput.CANCELLED()) }
+                    )
+                },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Search
+                ),
+                keyboardActions = KeyboardActions(
+                    onSearch = {}
+                ),
+                singleLine = true,
+                trailingIcon = {
+                    if (searchValue.text.isNotEmpty()) {
                         Icon(
-                            Icons.Rounded.ArrowBack,
+                            Icons.Rounded.Close,
                             contentDescription = "",
-                            Modifier.clickable { dialogRef.close(DropdownOutput.CANCELLED()) }
+                            Modifier.clickable {
+                                searchValue = TextFieldValue("")
+                                filterItems()
+                            }
                         )
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Search
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onSearch = {}
-                    ),
-                    singleLine = true,
-                    trailingIcon = {
-                        if (searchValue.text.isNotEmpty()) {
-                            Icon(
-                                Icons.Rounded.Close,
-                                contentDescription = "",
-                                Modifier.clickable {
-                                    searchValue = TextFieldValue("")
-                                    filterItems()
-                                }
-                            )
-                        }
-                    },
-                )
-            }
+                    }
+                },
+            )
 
             LazyColumn {
                 items(filteredItems, { it.value }) {
