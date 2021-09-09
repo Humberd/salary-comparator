@@ -17,7 +17,9 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -81,7 +83,7 @@ fun DialogDropdownScreen(
     items: List<DropdownItemModel>
 ) {
     val scope = rememberCoroutineScope()
-    var searchValue by remember { mutableStateOf(value) }
+    var searchValue by remember { mutableStateOf(TextFieldValue(value, TextRange(value.length))) }
 
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
@@ -100,18 +102,7 @@ fun DialogDropdownScreen(
     }
 
     Surface(Modifier.fillMaxSize()) {
-        Column(
-        ) {
-            Column {
-                Text("selectedId = ${value}")
-                Button(onClick = {
-                    dialogRef.close(DropdownOutput.SELECTED(""))
-
-                }) {
-                    Text("close me")
-                }
-            }
-
+        Column {
             Column {
                 TextField(
                     value = searchValue,
@@ -135,11 +126,11 @@ fun DialogDropdownScreen(
                     ),
                     singleLine = true,
                     trailingIcon = {
-                        if (searchValue.isNotEmpty()) {
+                        if (searchValue.text.isNotEmpty()) {
                             Icon(
                                 Icons.Rounded.Close,
                                 contentDescription = "",
-                                Modifier.clickable { searchValue = "" }
+                                Modifier.clickable { searchValue = TextFieldValue("") }
                             )
                         }
                     },
