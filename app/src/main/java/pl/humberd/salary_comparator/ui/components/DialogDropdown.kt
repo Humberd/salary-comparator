@@ -2,6 +2,8 @@ package pl.humberd.salary_comparator.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -17,9 +19,11 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -28,6 +32,7 @@ import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.ui.screens.Dialog
 import pl.humberd.salary_comparator.ui.screens.DialogRef
 import pl.humberd.salary_comparator.ui.screens.DropdownOutput
+import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
 @ExperimentalComposeUiApi
 @Composable
@@ -136,61 +141,57 @@ fun DialogDropdownScreen(
                     },
                 )
             }
+
+            LazyColumn {
+                items(items, { it.value }) {
+                    DialogDropdownItem(
+                        model = it,
+                        onClick = {
+                            dialogRef.close(DropdownOutput.SELECTED(it.value))
+                        }
+                    )
+                }
+            }
         }
     }
 }
 
 @Composable
 fun DialogDropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
-    DropdownMenuItem(
-        onClick = onClick
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .clickable(onClickLabel = model.name, role = Role.Button) { onClick() }
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            if (model.icon != null) {
-                Icon(
-                    painter = painterResource(id = model.icon),
-                    contentDescription = "",
-                    modifier = Modifier.padding(end = 4.dp)
-                )
-            }
-            Text(
-                model.name,
+        if (model.icon != null) {
+            Icon(
+                painter = painterResource(id = model.icon),
+                contentDescription = "",
+                modifier = Modifier.padding(end = 4.dp)
             )
         }
+        Text(
+            model.name,
+        )
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewDialogDropdown() {
-//    var state by remember { mutableStateOf("PLN") }
-//
-//    SalarycomparatorTheme {
-//        val context = LocalContext.current
-//        DialogDropdown(
-//            label = "From",
-//            items = CurrencyService.getCurrencies()
-//                .map { DropdownItemModel(it.name, it.name, null) },
-//            value = state,
-//            onValueChange = {
-//                println(FlagKit.getResId(context, "pl"))
-//                state = it
-//            }
-//        )
-//    }
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewDialogDropdownItem() {
-//    SalarycomparatorTheme {
-//        DialogDropdownItem(
-//            DropdownItemModel("Poland (PLN)", "PLN", FlagKit.getResId(LocalContext.current, "pl")),
-//            onClick = {}
-//        )
-//    }
-//}
+@ExperimentalComposeUiApi
+@Preview(showBackground = true)
+@Composable
+fun PreviewDialogDropdownScreen() {
+    SalarycomparatorTheme {
+        DialogDropdownScreen(
+            dialogRef = DialogRef {  },
+            items = listOf(
+                DropdownItemModel("Polish złoty (PLN)", "pln"),
+                DropdownItemModel("Euro (EUR)", "eur"),
+                DropdownItemModel("United States dollar (USD)", "usd"),
+            ),
+            value = ""
+        )
+    }
+}
