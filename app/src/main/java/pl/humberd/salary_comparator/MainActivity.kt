@@ -16,8 +16,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.services.CurrencyService
+import pl.humberd.salary_comparator.services.currencyRateDataStore
 import pl.humberd.salary_comparator.ui.components.BottomBar
 import pl.humberd.salary_comparator.ui.screens.Dialog
 import pl.humberd.salary_comparator.ui.screens.Screen
@@ -36,6 +38,14 @@ class MainActivity : ComponentActivity() {
             val scaffoldState = rememberScaffoldState()
             val scope = rememberCoroutineScope()
             val context = LocalContext.current
+
+            remember {
+                scope.launch(Dispatchers.IO) {
+                    currencyRateDataStore.data.collect {
+                        println(it)
+                    }
+                }
+            }
 
             remember {
                 scope.launch(Dispatchers.IO) {
