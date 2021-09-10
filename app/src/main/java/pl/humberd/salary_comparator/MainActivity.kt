@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.ui.components.BottomBar
@@ -37,9 +38,9 @@ class MainActivity : ComponentActivity() {
             val context = LocalContext.current
 
             remember {
-                scope.launch {
+                scope.launch(Dispatchers.IO) {
                     try {
-                        CurrencyService.updateFromJsonFile(context)
+                        CurrencyService.init(context)
                     } catch (e: Error) {
                         scaffoldState.snackbarHostState.showSnackbar(
                             e.message ?: "Failed to load default exchange rate", "Close"

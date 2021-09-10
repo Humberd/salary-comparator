@@ -9,8 +9,7 @@ import pl.humberd.salary_comparator.services.CurrencyService
 class SettingsViewModel: ViewModel() {
     fun updateExchangeRate() {
         viewModelScope.launch(Dispatchers.IO) {
-            val result = CurrencyService.fetchNewestData()
-            println(result)
+            CurrencyService.updateFromApi()
         }
     }
 }

@@ -1,0 +1,7 @@
+syntax = "proto3";
+package pl.humberd.salary_comparator.proto;
+
+message CurrencyRate {
+    string date = 1;
+    map<string, double> eur = 2;
+}

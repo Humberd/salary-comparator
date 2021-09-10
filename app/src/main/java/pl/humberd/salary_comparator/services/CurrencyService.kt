@@ -1,7 +1,10 @@
 package pl.humberd.salary_comparator.services
 
 import android.content.Context
-import org.json.JSONObject
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import com.google.protobuf.util.JsonFormat
+import pl.humberd.salary_comparator.proto.CurrencyRateOuterClass
 import pl.humberd.salary_comparator.ui.components.CURRENCIES
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -29,24 +32,46 @@ object CurrencyService {
     private val cacheMap = CURRENCIES.associate { it.id to it }
     private val cacheList = cacheMap.values
 
-    private var lastUpdate = ""
+    private val _lastUpdate = mutableStateOf<String?>("")
+    val lastUpdate: State<String?> = _lastUpdate
 
     fun getCurrencies() = cacheList
 
     fun get(id: String) = cacheMap[id]
 
-    private fun fetchNewestData(): String {
-        val repsponse = CurrencyRepository.instance.fetchCurrencies().execute().body()
-        if (repsponse == null) {
-            throw Error("Empty body")
+    fun init(context: Context) {
+        val jsonString = readInitialRatesJson(context)
+        val entity = generateModel(jsonString)
+
+        entity.eurMap.forEach {
+            cacheMap[it.key]?.updateRate(it.value)
         }
 
-        return repsponse
+        _lastUpdate.value = entity.date
     }
 
+    fun updateFromApi() {
+        val jsonString = readCurrentRatesFromAPI()
+        val entity = generateModel(jsonString)
 
-    fun updateFromJsonFile(context: Context) {
-        val json = try {
+        entity.eurMap.forEach {
+            cacheMap[it.key]?.updateRate(it.value)
+        }
+
+        _lastUpdate.value = entity.date
+    }
+
+    private fun generateModel(jsonString: String): CurrencyRateOuterClass.CurrencyRate {
+        val builder = CurrencyRateOuterClass.CurrencyRate.newBuilder()
+        JsonFormat.parser().ignoringUnknownFields().merge(jsonString, builder)
+        val entity = builder.build()
+        check(entity.date.isNotEmpty())
+        check(entity.eurMap.isNotEmpty())
+        return entity
+    }
+
+    private fun readInitialRatesJson(context: Context): String {
+        return try {
             val stream: InputStream = context.getAssets().open("initial_currency_rate.json")
             val size: Int = stream.available()
             val buffer = ByteArray(size)
@@ -57,16 +82,14 @@ object CurrencyService {
             ex.printStackTrace()
             throw ex
         }
-
-        updateRatesWith(JSONObject(json))
     }
 
-    private fun updateRatesWith(obj: JSONObject) {
-        val eurRates = obj.getJSONObject("eur")
-        lastUpdate = obj.getString("date")
-        eurRates.keys().forEach {
-            val rate = eurRates.getDouble(it)
-            cacheMap[it]?.updateRate(rate)
+    private fun readCurrentRatesFromAPI(): String {
+        val response = CurrencyRepository.instance.fetchCurrencies().execute().body()
+        if (response == null) {
+            throw Error("Empty body")
         }
+
+        return response
     }
 }
