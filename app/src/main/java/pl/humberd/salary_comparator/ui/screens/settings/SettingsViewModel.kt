@@ -19,13 +19,15 @@ class SettingsViewModel : ViewModel() {
             _isLoading.value = true
             try {
                 CurrencyService.updateFromApi(context)
-                _isLoading.value = false
             } catch (e: Exception) {
+                launch {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = e.message ?: "Something went wrong",
+                        actionLabel = "Close"
+                    )
+                }
+            } finally {
                 _isLoading.value = false
-                scaffoldState.snackbarHostState.showSnackbar(
-                    message = e.message ?: "Something went wrong",
-                    actionLabel = "Close"
-                )
             }
         }
     }
