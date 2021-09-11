@@ -1,16 +1,32 @@
 package pl.humberd.salary_comparator.ui.screens.settings
 
 import android.content.Context
+import androidx.compose.material.ScaffoldState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.services.CurrencyService
 
-class SettingsViewModel: ViewModel() {
-    fun updateExchangeRate(context: Context) {
+class SettingsViewModel : ViewModel() {
+    private val _isLoading = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
+
+    fun updateExchangeRate(context: Context, scaffoldState: ScaffoldState) {
         viewModelScope.launch(Dispatchers.IO) {
-            CurrencyService.updateFromApi(context)
+            _isLoading.value = true
+            try {
+                CurrencyService.updateFromApi(context)
+                _isLoading.value = false
+            } catch (e: Exception) {
+                _isLoading.value = false
+                scaffoldState.snackbarHostState.showSnackbar(
+                    message = e.message ?: "Something went wrong",
+                    actionLabel = "Close"
+                )
+            }
         }
     }
 }

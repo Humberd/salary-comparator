@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
                 scope.launch(Dispatchers.IO) {
                     try {
                         CurrencyService.init(context)
-                    } catch (e: Error) {
+                    } catch (e: Exception) {
                         scaffoldState.snackbarHostState.showSnackbar(
                             e.message ?: "Failed to load default exchange rate", "Close"
                         )
@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
                                 ConverterFormScreen(navController = navController)
                             }
                             composable(Screen.SETTINGS.route) {
-                                SettingsScreen()
+                                SettingsScreen(scaffoldState = scaffoldState)
                             }
                             dialog(
                                 Dialog.DROPDOWN.route,
