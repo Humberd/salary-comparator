@@ -56,8 +56,8 @@ fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel(), navCont
         }
 
         Column {
-            Divider(Modifier.padding(bottom = 8.dp))
-            Column(Modifier.padding(horizontal = 8.dp)) {
+            Divider(Modifier.padding(bottom = 16.dp))
+            Column(Modifier.padding(horizontal = 16.dp)) {
                 MainForm(viewModel, navController)
             }
         }

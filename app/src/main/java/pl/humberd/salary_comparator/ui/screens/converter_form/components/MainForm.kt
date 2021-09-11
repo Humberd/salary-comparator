@@ -1,9 +1,6 @@
 package pl.humberd.salary_comparator.ui.screens.converter_form.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -47,14 +44,17 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
 
     Column {
         Row(
-            Modifier.fillMaxWidth(),
+            Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
-                Modifier.weight(0.5f),
+                Modifier.width(150.dp),
             ) {
                 DialogDropdown(
                     navController = navController,
-                    label = stringResource(R.string.source_currency_label),
                     items = CURRENCIES
                         .map {
                             DropdownItemModel(
@@ -77,10 +77,8 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                 )
             }
             IconButton(
-                onClick = {
-                    viewModel.swap()
-                },
-                Modifier.weight(0.2f),
+                onClick = { viewModel.swap() },
+                Modifier.width(64.dp),
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_baseline_swap_horiz_24),
@@ -88,11 +86,10 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                 )
             }
             Column(
-                Modifier.weight(0.5f),
+                Modifier.width(150.dp),
             ) {
                 DialogDropdown(
                     navController = navController,
-                    label = stringResource(R.string.target_currency_label),
                     items = CURRENCIES
                         .map {
                             DropdownItemModel(

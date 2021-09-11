@@ -83,10 +83,12 @@ fun DialogDropdown(
         ) {
             Column {
                 if (label != null) {
-                    Text(
-                        label,
-                        fontSize = 12.sp
-                    )
+                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                        Text(
+                            label,
+                            fontSize = 12.sp
+                        )
+                    }
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     val model = items.find { it.value == value }
