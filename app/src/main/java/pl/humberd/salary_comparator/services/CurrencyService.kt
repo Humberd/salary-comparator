@@ -3,57 +3,14 @@ package pl.humberd.salary_comparator.services
 import android.content.Context
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.datastore.core.CorruptionException
-import androidx.datastore.core.Serializer
-import androidx.datastore.dataStore
-import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.collect
 import pl.humberd.salary_comparator.proto.CurrencyRateOuterClass.CurrencyRate
+import pl.humberd.salary_comparator.store.currencyRateDataStore
 import pl.humberd.salary_comparator.ui.components.CURRENCIES
-import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
-import retrofit2.create
-import retrofit2.http.GET
 import java.io.IOException
 import java.io.InputStream
-import java.io.OutputStream
 import java.nio.charset.Charset
-
-interface CurrencyRepository {
-    @GET("/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json")
-    fun fetchCurrencies(): Call<String>
-
-    companion object {
-        val instance = Retrofit.Builder()
-            .baseUrl("https://cdn.jsdelivr.net")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .build()
-            .create<CurrencyRepository>()
-    }
-}
-
-object CurrencyRateSerializer : Serializer<CurrencyRate?> {
-    override val defaultValue: CurrencyRate? = null
-
-    override suspend fun readFrom(input: InputStream): CurrencyRate? {
-        try {
-            return CurrencyRate.parseFrom(input)
-        } catch (exception: InvalidProtocolBufferException) {
-            throw CorruptionException("Cannot read proto.", exception)
-        }
-    }
-
-    override suspend fun writeTo(t: CurrencyRate?, output: OutputStream) {
-        t?.writeTo(output)
-    }
-}
-
-val Context.currencyRateDataStore by dataStore(
-    "currencyRate.pb",
-    CurrencyRateSerializer
-)
 
 object CurrencyService {
     private val cacheMap = CURRENCIES.associate { it.id to it }
