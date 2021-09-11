@@ -88,11 +88,22 @@ fun DialogDropdown(
                         fontSize = 12.sp
                     )
                 }
-                Text(valueDisplayTransformer(value))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    val model = items.find { it.value == value }
+                    if (model?.icon != null) {
+                        Icon(
+                            painterResource(model.icon),
+                            contentDescription = null,
+                            tint = Color.Unspecified,
+                            modifier = Modifier.padding(end = 8.dp)
+                        )
+                    }
+                    Text(valueDisplayTransformer(value))
+                }
             }
             Icon(
                 Icons.Rounded.KeyboardArrowDown,
-                contentDescription = "",
+                contentDescription = null,
                 Modifier.padding(start = 8.dp)
             )
         }
