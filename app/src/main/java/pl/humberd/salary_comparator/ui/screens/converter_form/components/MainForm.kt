@@ -38,6 +38,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
     val value by viewModel.amount.observeAsState("")
     val unit by viewModel.unit.observeAsState(AmountUnit.MONTH)
     val mostPopularCurrencies = remember { setOf("chf", "eur", "gbp", "usd", "pl") }
+    val focusManager = LocalFocusManager.current
 
     Column {
         Row(
@@ -109,8 +110,6 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            val focusManager = LocalFocusManager.current
-
             TextField(
                 modifier = Modifier.weight(0.5f),
                 placeholder = { Text("Amount") },
@@ -147,7 +146,10 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
         }
 
         Button(
-            onClick = { viewModel.convert() },
+            onClick = {
+                viewModel.convert()
+                focusManager.clearFocus()
+            },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = MaterialTheme.colors.secondary
             ),
