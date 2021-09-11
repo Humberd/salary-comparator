@@ -51,7 +51,8 @@ fun DialogDropdown(
     clearTextButtonAriaLabel: String = stringResource(R.string.generic_text_field_clear_button_aria_label),
     items: List<DropdownItemModel> = emptyList(),
     value: String = "",
-    onValueChange: (String) -> Unit = {}
+    onValueChange: (String) -> Unit = {},
+    valueDisplayTransformer: (String) -> String = { it }
 ) {
     TextButton(
         modifier = Modifier.semantics(mergeDescendants = true) {},
@@ -87,7 +88,7 @@ fun DialogDropdown(
                         fontSize = 12.sp
                     )
                 }
-                Text(value)
+                Text(valueDisplayTransformer(value))
             }
             Icon(
                 Icons.Rounded.KeyboardArrowDown,

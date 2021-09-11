@@ -72,7 +72,8 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                     value = sourceCurrency,
                     onValueChange = {
                         viewModel.updateSourceCurrency(it)
-                    }
+                    },
+                    valueDisplayTransformer = { it.uppercase(Locale.getDefault()) }
                 )
             }
             IconButton(
@@ -109,7 +110,8 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                     value = targetCurrency,
                     onValueChange = {
                         viewModel.updateTargetCurrency(it)
-                    }
+                    },
+                    valueDisplayTransformer = { it.uppercase(Locale.getDefault()) }
                 )
             }
         }
