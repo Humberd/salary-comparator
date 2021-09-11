@@ -166,4 +166,5 @@
     <string name="generic_search_placeholder">Search…</string>
     <string name="generic_back_button_aria_label">Back</string>
     <string name="generic_text_field_clear_button_aria_label">Clear text</string>
+    <string name="form_swap_button_aria_label">Swap currencies</string>
 </resources>

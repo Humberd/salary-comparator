@@ -83,8 +83,8 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                 Modifier.weight(0.2f),
             ) {
                 Icon(
-                    painter = painterResource(id = R.drawable.ic_baseline_swap_horiz_24),
-                    contentDescription = ""
+                    painter = painterResource(R.drawable.ic_baseline_swap_horiz_24),
+                    contentDescription = stringResource(R.string.form_swap_button_aria_label)
                 )
             }
             Column(
