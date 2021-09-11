@@ -8,6 +8,7 @@ import androidx.datastore.core.Serializer
 import androidx.datastore.dataStore
 import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import com.google.protobuf.util.JsonFormat
+import kotlinx.coroutines.flow.collect
 import pl.humberd.salary_comparator.proto.CurrencyRateOuterClass.CurrencyRate
 import pl.humberd.salary_comparator.ui.components.CURRENCIES
 import retrofit2.Call
@@ -66,22 +67,29 @@ object CurrencyService {
     fun get(id: String) = cacheMap[id]
 
     suspend fun init(context: Context) {
-        val jsonString = readInitialRatesJson(context)
-        val entity = generateModel(jsonString)
+        context.currencyRateDataStore.data.collect {
+            // valueAlreadyInStore
+            if (it != null) {
+                it.eurMap.forEach {
+                    cacheMap[it.key]?.updateRate(it.value)
+                }
 
-        entity.eurMap.forEach {
-            cacheMap[it.key]?.updateRate(it.value)
-        }
+                _lastUpdate.value = it.date
 
-        _lastUpdate.value = entity.date
+                return@collect
+            }
 
-        context.currencyRateDataStore.updateData {
-            entity
+            val jsonString = readInitialRatesJson(context)
+            updateRates(jsonString, context)
         }
     }
 
     suspend fun updateFromApi(context: Context) {
         val jsonString = readCurrentRatesFromAPI()
+        updateRates(jsonString, context)
+    }
+
+    private suspend fun updateRates(jsonString: String, context: Context) {
         val entity = generateModel(jsonString)
 
         entity.eurMap.forEach {
