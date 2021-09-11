@@ -7,7 +7,6 @@ import com.google.protobuf.util.JsonFormat
 import kotlinx.coroutines.flow.collect
 import pl.humberd.salary_comparator.proto.CurrencyRateOuterClass.CurrencyRate
 import pl.humberd.salary_comparator.store.currencyRateDataStore
-import pl.humberd.salary_comparator.ui.components.CURRENCIES
 import java.io.IOException
 import java.io.InputStream
 import java.nio.charset.Charset

@@ -124,7 +124,7 @@ fun PreviewDropdown() {
         Dropdown(
             label = "From",
             items = CurrencyService.getCurrencies()
-                .map { DropdownItemModel(it.name, it.name, icon =null) },
+                .map { DropdownItemModel(it.getName(), it.getName(), icon = null) },
             value = state,
             onValueChange = {
                 println(FlagKit.getResId(context, "pl"))
@@ -139,7 +139,11 @@ fun PreviewDropdown() {
 fun PreviewDropdownItem() {
     SalarycomparatorTheme {
         DropdownItem(
-            DropdownItemModel("Poland (PLN)", "PLN", icon = FlagKit.getResId(LocalContext.current, "pl")),
+            DropdownItemModel(
+                "Poland (PLN)",
+                "PLN",
+                icon = FlagKit.getResId(LocalContext.current, "pl")
+            ),
             onClick = {}
         )
     }

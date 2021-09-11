@@ -25,7 +25,11 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import pl.humberd.salary_comparator.R
-import pl.humberd.salary_comparator.ui.components.*
+import pl.humberd.salary_comparator.services.CURRENCIES
+import pl.humberd.salary_comparator.ui.components.AmountUnit
+import pl.humberd.salary_comparator.ui.components.DialogDropdown
+import pl.humberd.salary_comparator.ui.components.Dropdown
+import pl.humberd.salary_comparator.ui.components.DropdownItemModel
 import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormViewModel
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 import java.util.*
@@ -53,7 +57,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                     items = CURRENCIES
                         .map {
                             DropdownItemModel(
-                                "${it.name} (${
+                                "${it.getName()} (${
                                     it.id.uppercase(
                                         Locale.getDefault()
                                     )
@@ -89,7 +93,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                     items = CURRENCIES
                         .map {
                             DropdownItemModel(
-                                "${it.name} (${
+                                "${it.getName()} (${
                                     it.id.uppercase(
                                         Locale.getDefault()
                                     )
