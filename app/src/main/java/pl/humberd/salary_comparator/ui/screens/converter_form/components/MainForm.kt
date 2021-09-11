@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,7 +54,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
             ) {
                 DialogDropdown(
                     navController = navController,
-                    label = "From",
+                    label = stringResource(R.string.source_currency_label),
                     items = CURRENCIES
                         .map {
                             DropdownItemModel(
@@ -88,8 +89,9 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
             Column(
                 Modifier.weight(0.5f),
             ) {
-                Dropdown(
-                    label = "To",
+                DialogDropdown(
+                    navController = navController,
+                    label = stringResource(R.string.target_currency_label),
                     items = CURRENCIES
                         .map {
                             DropdownItemModel(
@@ -100,7 +102,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                                 })",
                                 it.id,
                                 mostPopular = mostPopularCurrencies.contains(it.id),
-                                icon = null
+                                icon = it.getFlagId(LocalContext.current)
                             )
                         }
                         .sortedBy { it.name },

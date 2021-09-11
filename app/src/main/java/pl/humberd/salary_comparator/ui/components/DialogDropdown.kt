@@ -22,7 +22,9 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
@@ -30,8 +32,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import pl.humberd.salary_comparator.R
 import pl.humberd.salary_comparator.ui.screens.Dialog
 import pl.humberd.salary_comparator.ui.screens.DialogRef
 import pl.humberd.salary_comparator.ui.screens.DropdownOutput
@@ -43,11 +47,15 @@ import java.util.*
 fun DialogDropdown(
     navController: NavController,
     label: String? = null,
+    backButtonAriaLabel: String = stringResource(R.string.generic_back_button_aria_label),
+    searchPlaceholderLabel: String = stringResource(R.string.generic_search_placeholder),
+    clearTextButtonAriaLabel: String = stringResource(R.string.generic_text_field_clear_button_aria_label),
     items: List<DropdownItemModel> = emptyList(),
     value: String = "",
     onValueChange: (String) -> Unit = {}
 ) {
     TextButton(
+        modifier = Modifier.semantics(mergeDescendants = true) {},
         onClick = {
             Dialog.DROPDOWN.open(
                 navController,
@@ -57,7 +65,14 @@ fun DialogDropdown(
                     }
                 }
             ) {
-                DialogDropdownScreen(it, value, items)
+                DialogDropdownScreen(
+                    dialogRef = it,
+                    value = value,
+                    items = items,
+                    backButtonAriaLabel = backButtonAriaLabel,
+                    searchPlaceholderLabel = searchPlaceholderLabel,
+                    clearTextButtonAriaLabel = clearTextButtonAriaLabel
+                )
             }
         },
     ) {
@@ -89,6 +104,9 @@ fun DialogDropdown(
 fun DialogDropdownScreen(
     dialogRef: DialogRef<DropdownOutput>,
     value: String,
+    backButtonAriaLabel: String,
+    searchPlaceholderLabel: String,
+    clearTextButtonAriaLabel: String,
     items: List<DropdownItemModel>
 ) {
 
@@ -102,7 +120,7 @@ fun DialogDropdownScreen(
 
     fun filterItems() {
         val searchLc = searchValue.text.lowercase(Locale.getDefault())
-        scope.launch {
+        scope.launch(Dispatchers.IO) {
             filteredItems.clear()
             filteredItems.addAll(
                 items.filter { it.name.lowercase(Locale.getDefault()).contains(searchLc) }
@@ -115,7 +133,7 @@ fun DialogDropdownScreen(
         filterItems()
 
         var isDisposed = false
-        scope.launch {
+        scope.launch(Dispatchers.IO) {
             delay(10)
             if (isDisposed) return@launch
             focusRequester.requestFocus()
@@ -137,11 +155,11 @@ fun DialogDropdownScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(focusRequester),
-                placeholder = { Text("Search...") },
+                placeholder = { Text(searchPlaceholderLabel) },
                 leadingIcon = {
                     Icon(
                         Icons.Rounded.ArrowBack,
-                        contentDescription = "",
+                        contentDescription = backButtonAriaLabel,
                         Modifier.clickable { dialogRef.close(DropdownOutput.CANCELLED()) }
                     )
                 },
@@ -156,7 +174,7 @@ fun DialogDropdownScreen(
                     if (searchValue.text.isNotEmpty()) {
                         Icon(
                             Icons.Rounded.Close,
-                            contentDescription = "",
+                            contentDescription = clearTextButtonAriaLabel,
                             Modifier.clickable {
                                 searchValue = TextFieldValue("")
                                 filterItems()
@@ -183,7 +201,9 @@ fun DialogDropdownScreen(
 @Composable
 fun DialogDropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
     Column(
-        Modifier.clickable(onClickLabel = model.name, role = Role.Button) { onClick() }
+        Modifier
+            .clickable(onClickLabel = model.name, role = Role.Button) { onClick() }
+            .semantics(mergeDescendants = true) {}
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -194,7 +214,7 @@ fun DialogDropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
             if (model.icon != null) {
                 Icon(
                     painter = painterResource(model.icon),
-                    contentDescription = "",
+                    contentDescription = null,
                     modifier = Modifier
                         .padding(end = 16.dp)
                         .border(0.1.dp, MaterialTheme.colors.onSurface),
@@ -215,12 +235,15 @@ fun PreviewDialogDropdownScreen() {
     SalarycomparatorTheme {
         DialogDropdownScreen(
             dialogRef = DialogRef { },
+            value = "",
+            backButtonAriaLabel = "Back",
+            searchPlaceholderLabel = "Search...",
+            clearTextButtonAriaLabel = "Clear text",
             items = listOf(
                 DropdownItemModel("Polish złoty (PLN)", "pln"),
                 DropdownItemModel("Euro (EUR)", "eur"),
                 DropdownItemModel("United States dollar (USD)", "usd"),
-            ),
-            value = ""
+            )
         )
     }
 }

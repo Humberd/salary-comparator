@@ -161,4 +161,9 @@
     <string name="currency_country_yer">Yemeni rial</string>
     <string name="currency_country_zar">South African rand</string>
     <string name="currency_country_zmw">Zambian Kwacha</string>
+    <string name="source_currency_label">From</string>
+    <string name="target_currency_label">To</string>
+    <string name="generic_search_placeholder">Search…</string>
+    <string name="generic_back_button_aria_label">Back</string>
+    <string name="generic_text_field_clear_button_aria_label">Clear text</string>
 </resources>
