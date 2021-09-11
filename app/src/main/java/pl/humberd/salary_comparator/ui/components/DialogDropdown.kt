@@ -32,7 +32,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.R
@@ -120,7 +119,7 @@ fun DialogDropdownScreen(
 
     fun filterItems() {
         val searchLc = searchValue.text.lowercase(Locale.getDefault())
-        scope.launch(Dispatchers.IO) {
+        scope.launch {
             filteredItems.clear()
             filteredItems.addAll(
                 items.filter { it.name.lowercase(Locale.getDefault()).contains(searchLc) }
@@ -133,7 +132,7 @@ fun DialogDropdownScreen(
         filterItems()
 
         var isDisposed = false
-        scope.launch(Dispatchers.IO) {
+        scope.launch {
             delay(10)
             if (isDisposed) return@launch
             focusRequester.requestFocus()
