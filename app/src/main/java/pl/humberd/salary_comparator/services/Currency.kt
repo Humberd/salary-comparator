@@ -1,6 +1,7 @@
 package pl.humberd.salary_comparator.services
 
 import android.content.Context
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.murgupluoglu.flagkit.FlagKit
@@ -8,7 +9,7 @@ import pl.humberd.salary_comparator.R
 
 data class Currency(
     val id: String,
-    private val nameRes: Int,
+    @StringRes private val nameRes: Int,
     val flagCode: String,
 ) {
     private var to1EuroRate: Double = -1.0

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Salary comparator</string>
-    <string name="source_currency_label">Z</string>
-    <string name="target_currency_label">Na</string>
     <string name="generic_search_placeholder">Szukaj...</string>
     <string name="generic_back_button_aria_label">Cofnij</string>
     <string name="generic_text_field_clear_button_aria_label">Wyczyść tekst</string>
+    <string name="form_swap_button_aria_label">Zamień waluty</string>
+    <string name="unit_name_hour">Godzina</string>
+    <string name="unit_name_day">Dzień</string>
+    <string name="unit_name_month">Miesiąc</string>
+    <string name="unit_name_year">Rok</string>
 </resources>

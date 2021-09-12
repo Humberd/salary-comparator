@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import pl.humberd.salary_comparator.ui.components.AmountUnit
+import pl.humberd.salary_comparator.services.AmountUnit
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 import java.util.*
 

@@ -9,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,11 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import pl.humberd.salary_comparator.R
+import pl.humberd.salary_comparator.services.AmountUnit
 import pl.humberd.salary_comparator.services.CURRENCIES
-import pl.humberd.salary_comparator.ui.components.AmountUnit
 import pl.humberd.salary_comparator.ui.components.DialogDropdown
-import pl.humberd.salary_comparator.ui.components.Dropdown
 import pl.humberd.salary_comparator.ui.components.DropdownItemModel
+import pl.humberd.salary_comparator.ui.components.InlineRadio
+import pl.humberd.salary_comparator.ui.components.InlineRadioModel
 import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormViewModel
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 import java.util.*
@@ -135,37 +135,53 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                 shape = MaterialTheme.shapes.large,
             )
 
-            Column(
-                modifier = Modifier.weight(0.5f),
-            ) {
-                Dropdown(
-                    items = AmountUnit.values().map {
-                        DropdownItemModel(it.name, it.name, icon = null)
-                    },
-                    value = unit.toString(),
-                    onValueChange = {
-                        viewModel.updateUnit(it)
-                    }
-                )
-            }
+//            Column(
+//                modifier = Modifier.weight(0.5f),
+//            ) {
+//                Dropdown(
+//                    items = AmountUnit.values().map {
+//                        DropdownItemModel(it.getName(), it.name, icon = null)
+//                    },
+//                    value = unit.toString(),
+//                    onValueChange = {
+//                        viewModel.updateUnit(it)
+//                    },
+//                )
+//            }
         }
 
-        Button(
-            onClick = {
-                viewModel.convert()
-                focusManager.clearFocus()
-            },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colors.secondary
-            ),
-            modifier = Modifier
-                .align(CenterHorizontally)
-                .padding(bottom = 16.dp, top = 16.dp)
+        Row(
+            Modifier.padding(vertical = 16.dp)
         ) {
-            Text("Convert")
+            InlineRadio(
+                items = AmountUnit.values().map {
+                    InlineRadioModel(
+                        name = it.getName(),
+                        value = it.name
+                    )
+                },
+                value = unit.toString(),
+                onValueChange = { viewModel.updateUnit(it) },
+            )
         }
+
+//        Button(
+//            onClick = {
+//                viewModel.convert()
+//                focusManager.clearFocus()
+//            },
+//            colors = ButtonDefaults.buttonColors(
+//                backgroundColor = MaterialTheme.colors.secondary
+//            ),
+//            modifier = Modifier
+//                .align(CenterHorizontally)
+//                .padding(bottom = 16.dp, top = 16.dp)
+//        ) {
+//            Text("Convert")
+//        }
     }
 }
+
 
 @ExperimentalComposeUiApi
 @Preview(showBackground = true)
