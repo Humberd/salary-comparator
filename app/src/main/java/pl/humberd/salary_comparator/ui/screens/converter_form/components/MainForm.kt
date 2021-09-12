@@ -5,6 +5,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -113,6 +114,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
             }
         }
         Row(
+            Modifier.padding(bottom = 16.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             TextField(
@@ -151,7 +153,18 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
         }
 
         Row(
-            Modifier.padding(vertical = 16.dp)
+            Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                Text(stringResource(R.string.main_form_per_label),)
+            }
+        }
+
+        Row(
+            Modifier.padding(bottom = 16.dp)
         ) {
             InlineRadio(
                 items = AmountUnit.values().map {

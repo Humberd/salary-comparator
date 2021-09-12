@@ -169,4 +169,5 @@
     <string name="unit_name_day">Day</string>
     <string name="unit_name_month">Month</string>
     <string name="unit_name_year">Year</string>
+    <string name="main_form_per_label">per</string>
 </resources>

@@ -5,8 +5,9 @@
     <string name="generic_back_button_aria_label">Cofnij</string>
     <string name="generic_text_field_clear_button_aria_label">Wyczyść tekst</string>
     <string name="form_swap_button_aria_label">Zamień waluty</string>
-    <string name="unit_name_hour">Godzina</string>
+    <string name="unit_name_hour">Godzinę</string>
     <string name="unit_name_day">Dzień</string>
     <string name="unit_name_month">Miesiąc</string>
     <string name="unit_name_year">Rok</string>
+    <string name="main_form_per_label">na</string>
 </resources>
