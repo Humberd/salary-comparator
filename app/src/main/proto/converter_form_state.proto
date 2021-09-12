@@ -1,0 +1,9 @@
+syntax = "proto3";
+package pl.humberd.salary_comparator.proto;
+
+message ConverterFormState {
+    string sourceCurrency = 1;
+    string targetCurrency = 2;
+    optional string amount = 3;
+    string amountUnit = 4;
+}
