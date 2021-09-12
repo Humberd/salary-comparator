@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.humberd.salary_comparator.R
@@ -25,17 +26,23 @@ fun SettingsScreen(
 
     Column {
         SettingCell(
-            primaryText = "Currency Exchange Rate",
-            secondaryText = "Last update ${lastUpdate}",
+            primaryText = stringResource(R.string.screens_settings_options_exchange_rate_name),
+            secondaryText = stringResource(
+                R.string.screens_settings_options_exchange_rate_description,
+                lastUpdate ?: ""
+            ),
         ) {
             TextButton(
                 enabled = !isLoading,
                 onClick = { viewModel.updateExchangeRate(context, scaffoldState) }
             ) {
                 if (!isLoading) {
-                    Text("Update")
+                    Text(stringResource(R.string.screens_settings_options_exchange_rate_action_name))
                 } else {
-                    Icon(painterResource(R.drawable.ic_baseline_sync_24), contentDescription = null)
+                    Icon(
+                        painterResource(R.drawable.ic_baseline_sync_24),
+                        contentDescription = stringResource(R.string.screens_settings_options_exchange_rate_action_loading_aria_label)
+                    )
                 }
             }
         }

@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pl.humberd.salary_comparator.R
 import pl.humberd.salary_comparator.services.CurrencyService
 
 class SettingsViewModel : ViewModel() {
@@ -22,8 +23,8 @@ class SettingsViewModel : ViewModel() {
             } catch (e: Exception) {
                 launch {
                     scaffoldState.snackbarHostState.showSnackbar(
-                        message = e.message ?: "Something went wrong",
-                        actionLabel = "Close"
+                        message = e.message ?: context.getString(R.string.snackbar_update_exchange_rate_default_message),
+                        actionLabel = context.getString(R.string.snackbar_action_close)
                     )
                 }
             } finally {

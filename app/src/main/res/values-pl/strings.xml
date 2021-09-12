@@ -10,4 +10,13 @@
     <string name="unit_name_month">Miesiąc</string>
     <string name="unit_name_year">Rok</string>
     <string name="main_form_per_label">na</string>
+    <string name="screens_converter_name">Konwerter</string>
+    <string name="screens_settings_name">Ustawienia</string>
+    <string name="screens.settings.options.exchange_rate.name">Kurs wymiany walut</string>
+    <string name="screens.settings.options.exchange_rate.description">Ostatnia aktualizacja %1$s</string>
+    <string name="screens.settings.options.exchange_rate.action.name">Odśwież</string>
+    <string name="screens.settings.options.exchange_rate.action.loading_aria_label">Ładowanie</string>
+    <string name="snackbar.action.close">Zamknij</string>
+    <string name="snackbar.load_initial_exchange_rate.default_message">Wystąpił problem przy ładowaniu domyślnego kursu walut</string>
+    <string name="snackbar.update_exchange_rate.default_message">Wystąpił nieoczekiwany problem</string>
 </resources>

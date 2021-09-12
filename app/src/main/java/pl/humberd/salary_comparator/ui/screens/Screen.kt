@@ -1,21 +1,30 @@
 package pl.humberd.salary_comparator.ui.screens
 
+import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import pl.humberd.salary_comparator.R
 
-sealed class Screen(val route: String, val name: String, val icon: Int) {
+sealed class Screen(
+    val route: String,
+    @StringRes private val nameRes: Int,
+    val icon: Int
+) {
     object CONVERTER_FORM : Screen(
         route = "converter_form",
-        name = "Converter",
+        nameRes = R.string.screens_converter_name,
         icon = R.drawable.ic_baseline_calculate_24
     )
 
     object SETTINGS : Screen(
         route = "settings",
-        name = "Settings",
+        nameRes = R.string.screens_settings_name,
         icon = R.drawable.ic_baseline_settings_24
     )
+
+    @Composable
+    fun getName() = stringResource(nameRes)
 }
 
 data class DialogRef<in OUTPUT>(
@@ -28,7 +37,7 @@ data class DialogRef<in OUTPUT>(
 
 sealed class DropdownOutput {
     class CANCELLED : DropdownOutput()
-    class SELECTED(val id: String): DropdownOutput()
+    class SELECTED(val id: String) : DropdownOutput()
 }
 
 sealed class Dialog(val route: String) {
@@ -36,7 +45,11 @@ sealed class Dialog(val route: String) {
         var content: (@Composable () -> Unit)? = null
             private set
 
-        fun open(navController: NavController, onClose: (DropdownOutput) -> Unit = {}, content: @Composable (DialogRef<DropdownOutput>) -> Unit) {
+        fun open(
+            navController: NavController,
+            onClose: (DropdownOutput) -> Unit = {},
+            content: @Composable (DialogRef<DropdownOutput>) -> Unit
+        ) {
             val dialogRef = DialogRef<DropdownOutput> {
                 navController.popBackStack()
                 onClose(it)

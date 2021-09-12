@@ -35,7 +35,7 @@ fun BottomBar(navController: NavController) {
                         contentDescription = ""
                     )
                 },
-                label = { Text(it.name) },
+                label = { Text(it.getName()) },
                 selected = currentDestination?.hierarchy?.any { view -> view.route == it.route } == true,
                 onClick = {
                     navController.navigate(it.route) {

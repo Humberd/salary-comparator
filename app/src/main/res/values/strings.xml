@@ -170,4 +170,13 @@
     <string name="unit_name_month">Month</string>
     <string name="unit_name_year">Year</string>
     <string name="main_form_per_label">per</string>
+    <string name="screens_converter_name">Converter</string>
+    <string name="screens_settings_name">Settings</string>
+    <string name="screens.settings.options.exchange_rate.name">Currency Exchange Rate</string>
+    <string name="screens.settings.options.exchange_rate.description">Last update %1$s</string>
+    <string name="screens.settings.options.exchange_rate.action.name">Update</string>
+    <string name="screens.settings.options.exchange_rate.action.loading_aria_label">Loading</string>
+    <string name="snackbar.action.close">Close</string>
+    <string name="snackbar.load_initial_exchange_rate.default_message">Failed to load default exchange rate</string>
+    <string name="snackbar.update_exchange_rate.default_message">Something went wrong</string>
 </resources>
