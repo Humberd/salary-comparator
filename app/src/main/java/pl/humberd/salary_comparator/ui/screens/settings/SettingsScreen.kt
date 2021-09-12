@@ -1,16 +1,18 @@
 package pl.humberd.salary_comparator.ui.screens.settings
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -59,9 +61,9 @@ fun SettingsScreen(
                 if (!isLoading) {
                     Text(stringResource(R.string.screens_settings_options_exchange_rate_action_name))
                 } else {
-                    Icon(
-                        painterResource(R.drawable.ic_baseline_sync_24),
-                        contentDescription = stringResource(R.string.screens_settings_options_exchange_rate_action_loading_aria_label)
+                    CircularProgressIndicator(
+                        Modifier.size(20.dp),
+                        strokeWidth = 2.dp
                     )
                 }
             }
