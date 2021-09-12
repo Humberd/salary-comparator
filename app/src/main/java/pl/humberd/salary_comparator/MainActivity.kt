@@ -43,7 +43,8 @@ class MainActivity : ComponentActivity() {
                         CurrencyService.init(context)
                     } catch (e: Exception) {
                         scaffoldState.snackbarHostState.showSnackbar(
-                            e.message ?: context.getString(R.string.screens_settings_options_exchange_rate_action_loading_aria_label),
+                            e.message
+                                ?: context.getString(R.string.screens_settings_options_exchange_rate_action_loading_aria_label),
                             context.getString(R.string.snackbar_load_initial_exchange_rate_default_message)
                         )
                     }
@@ -66,10 +67,15 @@ class MainActivity : ComponentActivity() {
                             Modifier.padding(innerPadding)
                         ) {
                             composable(Screen.CONVERTER_FORM.route) {
-                                ConverterFormScreen(navController = navController)
+                                ConverterFormScreen(
+                                    navController = navController
+                                )
                             }
                             composable(Screen.SETTINGS.route) {
-                                SettingsScreen(scaffoldState = scaffoldState)
+                                SettingsScreen(
+                                    scaffoldState = scaffoldState,
+                                    navController = navController
+                                )
                             }
                             dialog(
                                 Dialog.DROPDOWN.route,

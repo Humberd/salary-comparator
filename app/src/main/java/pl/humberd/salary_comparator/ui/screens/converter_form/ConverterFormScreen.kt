@@ -9,26 +9,36 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import pl.humberd.salary_comparator.R
+import pl.humberd.salary_comparator.ui.screens.Screen
 import pl.humberd.salary_comparator.ui.screens.converter_form.components.MainForm
 import pl.humberd.salary_comparator.ui.screens.converter_form.components.MainResult
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 
 @ExperimentalComposeUiApi
 @Composable
-fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel(), navController: NavController) {
+fun ConverterFormScreen(
+    viewModel: ConverterFormViewModel = viewModel(),
+    navController: NavController = rememberNavController()
+) {
     val result by viewModel.result.observeAsState(emptyMap())
 
     Column(
         modifier = Modifier.fillMaxHeight(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+        TopAppBar(
+            title = {
+                Text(Screen.CONVERTER_FORM.getName())
+            }
+        )
+
         Column {
             if (result.isEmpty()) {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.disabled) {
@@ -48,7 +58,7 @@ fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel(), navCont
                 }
             } else {
                 Column(
-                    Modifier.padding(top=16.dp, start = 8.dp, end = 8.dp)
+                    Modifier.padding(top = 16.dp, start = 8.dp, end = 8.dp)
                 ) {
                     MainResult(result)
                 }
@@ -65,10 +75,10 @@ fun ConverterFormScreen(viewModel: ConverterFormViewModel = viewModel(), navCont
 }
 
 @ExperimentalComposeUiApi
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 fun PreviewConverterFormScreen() {
     SalarycomparatorTheme {
-        ConverterFormScreen(ConverterFormViewModel(), NavController(LocalContext.current))
+        ConverterFormScreen(ConverterFormViewModel())
     }
 }

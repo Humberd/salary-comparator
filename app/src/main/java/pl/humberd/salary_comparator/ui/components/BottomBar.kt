@@ -6,7 +6,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -31,7 +30,7 @@ fun BottomBar(navController: NavController) {
             BottomNavigationItem(
                 icon = {
                     Icon(
-                        painterResource(id = it.icon),
+                        it.getIcon(),
                         contentDescription = ""
                     )
                 },
