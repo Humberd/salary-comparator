@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -114,12 +115,23 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
             }
         }
         Row(
-            Modifier.padding(bottom = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
+            Modifier
+                .padding(bottom = 16.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
         ) {
             TextField(
-                modifier = Modifier.weight(0.5f),
-                placeholder = { Text("Amount") },
+                modifier = Modifier.width(150.dp),
+                placeholder = {
+                    Text(
+                        text = "Amount",
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                },
+                textStyle = LocalTextStyle.current.copy(
+                    textAlign = TextAlign.Center
+                ),
                 value = value,
                 onValueChange = {
                     viewModel.updateValue(it)
@@ -159,7 +171,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
             horizontalArrangement = Arrangement.Center
         ) {
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                Text(stringResource(R.string.main_form_per_label),)
+                Text(stringResource(R.string.main_form_per_label))
             }
         }
 
