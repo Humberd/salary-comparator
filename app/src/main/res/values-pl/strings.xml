@@ -19,4 +19,5 @@
     <string name="snackbar.action.close">Zamknij</string>
     <string name="snackbar.load_initial_exchange_rate.default_message">Wystąpił problem przy ładowaniu domyślnego kursu walut</string>
     <string name="snackbar.update_exchange_rate.default_message">Wystąpił nieoczekiwany problem</string>
+    <string name="screens.converter.amount_field.placeholder">Kwota</string>
 </resources>

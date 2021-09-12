@@ -124,7 +124,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                 modifier = Modifier.width(150.dp),
                 placeholder = {
                     Text(
-                        text = "Amount",
+                        text = stringResource(R.string.screens_converter_amount_field_placeholder),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )

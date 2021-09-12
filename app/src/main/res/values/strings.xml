@@ -179,4 +179,5 @@
     <string name="snackbar.action.close">Close</string>
     <string name="snackbar.load_initial_exchange_rate.default_message">Failed to load default exchange rate</string>
     <string name="snackbar.update_exchange_rate.default_message">Something went wrong</string>
+    <string name="screens.converter.amount_field.placeholder">Amount</string>
 </resources>
