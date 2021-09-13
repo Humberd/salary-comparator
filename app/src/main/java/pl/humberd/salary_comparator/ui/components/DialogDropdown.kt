@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.accompanist.insets.LocalWindowInsets
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.R
@@ -142,6 +144,12 @@ fun DialogDropdownScreen(
         }
     }
 
+    val insets = LocalWindowInsets.current
+
+    val imeBottom = with(LocalDensity.current) {
+        (insets.ime.bottom - insets.navigationBars.bottom).coerceAtLeast(0).toDp()
+    }
+
     DisposableEffect(Unit) {
         filterItems()
 
@@ -157,7 +165,11 @@ fun DialogDropdownScreen(
         }
     }
 
-    Surface(Modifier.fillMaxSize()) {
+    Surface(
+        Modifier
+            .fillMaxSize()
+            .padding(bottom = imeBottom)
+    ) {
         Column {
             TextField(
                 value = searchValue,

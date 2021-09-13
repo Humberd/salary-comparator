@@ -45,13 +45,13 @@ fun ConverterFormScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 64.dp),
+                            .padding(top = 0.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Icon(
                             painterResource(R.drawable.ic_baseline_table_view_24),
                             contentDescription = "",
-                            modifier = Modifier.size(120.dp),
+                            modifier = Modifier.size(50.dp),
                         )
                         Text("Fill the form below")
                     }

@@ -11,10 +11,14 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.navigationBarsWithImePadding
+import com.google.accompanist.insets.statusBarsPadding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.services.CurrencyService
@@ -31,6 +35,7 @@ import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             val scaffoldState = rememberScaffoldState()
@@ -52,36 +57,43 @@ class MainActivity : ComponentActivity() {
             }
 
             SalarycomparatorTheme {
-                Surface(color = MaterialTheme.colors.background) {
-                    val navController = rememberNavController()
+                ProvideWindowInsets {
+                    Surface(
+                        color = MaterialTheme.colors.background,
+                        modifier = Modifier
+                            .navigationBarsWithImePadding()
+                            .statusBarsPadding()
+                    ) {
+                        val navController = rememberNavController()
 
-                    Scaffold(
-                        scaffoldState = scaffoldState,
-                        bottomBar = {
-                            BottomBar(navController)
-                        },
-                    ) { innerPadding ->
-                        NavHost(
-                            navController = navController,
-                            startDestination = Screen.CONVERTER_FORM.route,
-                            Modifier.padding(innerPadding)
-                        ) {
-                            composable(Screen.CONVERTER_FORM.route) {
-                                ConverterFormScreen(
-                                    navController = navController
-                                )
-                            }
-                            composable(Screen.SETTINGS.route) {
-                                SettingsScreen(
-                                    scaffoldState = scaffoldState,
-                                    navController = navController
-                                )
-                            }
-                            dialog(
-                                Dialog.DROPDOWN.route,
-                                dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+                        Scaffold(
+                            scaffoldState = scaffoldState,
+                            bottomBar = {
+                                BottomBar(navController)
+                            },
+                        ) { innerPadding ->
+                            NavHost(
+                                navController = navController,
+                                startDestination = Screen.CONVERTER_FORM.route,
+                                Modifier.padding(innerPadding)
                             ) {
-                                Dialog.DROPDOWN.content?.invoke()
+                                composable(Screen.CONVERTER_FORM.route) {
+                                    ConverterFormScreen(
+                                        navController = navController
+                                    )
+                                }
+                                composable(Screen.SETTINGS.route) {
+                                    SettingsScreen(
+                                        scaffoldState = scaffoldState,
+                                        navController = navController
+                                    )
+                                }
+                                dialog(
+                                    Dialog.DROPDOWN.route,
+                                    dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+                                ) {
+                                    Dialog.DROPDOWN.content?.invoke()
+                                }
                             }
                         }
                     }

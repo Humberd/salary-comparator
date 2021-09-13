@@ -70,7 +70,9 @@ dependencies {
     implementation "com.google.protobuf:protobuf-java:3.17.3"
     implementation "com.google.protobuf:protobuf-kotlin:3.17.3"
     implementation "com.google.protobuf:protobuf-java-util:3.17.3"
-
+    implementation "com.google.accompanist:accompanist-insets:0.18.0"
+    implementation "com.google.accompanist:accompanist-insets-ui:0.18.0"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.18.0"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
