@@ -1,70 +1,62 @@
 package pl.humberd.salary_comparator.ui.screens.converter_form
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import pl.humberd.salary_comparator.proto.ConverterFormStateOuterClass.ConverterFormState
 import pl.humberd.salary_comparator.services.AmountUnit
 import pl.humberd.salary_comparator.services.CurrencyService
+import pl.humberd.salary_comparator.store.converterFormStateDataStore
 import pl.humberd.salary_comparator.ui.screens.converter_form.components.Currency
 import java.util.*
 
 class ConverterFormViewModel : ViewModel() {
-    private val _sourceCurrency = MutableLiveData("eur")
-    val sourceCurrency: LiveData<String> = _sourceCurrency
-
-    private val _targetCurrency = MutableLiveData("pln")
-    val targetCurrency: LiveData<String> = _targetCurrency
-
-    private val _amount = MutableLiveData("4500")
-    val amount: LiveData<String> = _amount
-
-    private val _unit = MutableLiveData(AmountUnit.MONTH)
-    val unit: LiveData<AmountUnit> = _unit
-
     private val _result = MutableLiveData<Map<AmountUnit, List<Pair<Currency, Double>>>>(emptyMap())
     val result: LiveData<Map<AmountUnit, List<Pair<Currency, Double>>>> = _result
 
-    fun updateSourceCurrency(new: String) {
-        _sourceCurrency.value = new
+    fun swap(context: Context) {
+        viewModelScope.launch(Dispatchers.IO) {
+            context.converterFormStateDataStore.updateData {
+                it.toBuilder().apply {
+                    sourceCurrency = it.targetCurrency
+                    targetCurrency = it.sourceCurrency
+                }.build()
+            }
+        }
     }
 
-    fun updateTargetCurrency(new: String) {
-        _targetCurrency.value = new
-    }
-
-    fun updateValue(new: String) {
-        _amount.value = new
-    }
-
-    fun updateUnit(unit: String) {
-        _unit.value = AmountUnit.valueOf(unit)
-    }
-
-    fun swap() {
-        val source = sourceCurrency.value
-        _sourceCurrency.value = targetCurrency.value
-        _targetCurrency.value = source
-    }
-
-    fun convert() {
-        val sourceAmount = amount.value.let {
+    fun convert(state: ConverterFormState) {
+        val sourceAmount = state.amount.let {
             check(it != null)
-            it.toDoubleOrNull().let {
-                check(it != null)
+            if (it.isEmpty()) {
+                return
+            }
+            val value = it
+                .replace(",", ".")
+                .replace("-", "")
+                .replace(" ", "")
+            value.toDoubleOrNull().let {
+                if (it == null) {
+                    return
+                }
                 it
             }
         }
-        val sourceUnit = unit.value.let {
+        val sourceUnit = state.amountUnit.let {
             check(it != null)
-            it
+            AmountUnit.valueOf(it)
         }
         val sourceAmountPerHour = sourceAmount / sourceUnit.hours
 
-        val sourceCurrency = this.sourceCurrency.value.let {
+        val sourceCurrency = state.sourceCurrency.let {
             check(it != null)
             it.lowercase(Locale.getDefault())
         }
-        val targetCurrency = this.targetCurrency.value.let {
+        val targetCurrency = state.targetCurrency.let {
             check(it != null)
             it.lowercase(Locale.getDefault())
         }

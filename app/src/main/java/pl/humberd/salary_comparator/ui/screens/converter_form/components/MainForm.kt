@@ -4,11 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -23,9 +19,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.R
 import pl.humberd.salary_comparator.services.AmountUnit
 import pl.humberd.salary_comparator.services.CURRENCIES
+import pl.humberd.salary_comparator.store.ConverterFormStateSerializer
+import pl.humberd.salary_comparator.store.converterFormStateDataStore
 import pl.humberd.salary_comparator.ui.components.DialogDropdown
 import pl.humberd.salary_comparator.ui.components.DropdownItemModel
 import pl.humberd.salary_comparator.ui.components.InlineRadio
@@ -37,10 +36,17 @@ import java.util.*
 @ExperimentalComposeUiApi
 @Composable
 fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: NavController) {
-    val sourceCurrency by viewModel.sourceCurrency.observeAsState("")
-    val targetCurrency by viewModel.targetCurrency.observeAsState("")
-    val value by viewModel.amount.observeAsState("")
-    val unit by viewModel.unit.observeAsState(AmountUnit.MONTH)
+    val context = LocalContext.current
+    val state by context.converterFormStateDataStore.data.collectAsState(
+        ConverterFormStateSerializer.defaultValue
+    )
+
+    LaunchedEffect(state) {
+        viewModel.convert(state)
+    }
+
+    val scope = rememberCoroutineScope()
+
     val mostPopularCurrencies = remember { setOf("chf", "eur", "gbp", "usd", "pl") }
     val focusManager = LocalFocusManager.current
 
@@ -67,19 +73,25 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                                 })",
                                 it.id,
                                 mostPopular = mostPopularCurrencies.contains(it.id),
-                                icon = it.getFlagId(LocalContext.current)
+                                icon = it.getFlagId(context)
                             )
                         }
                         .sortedBy { it.name },
-                    value = sourceCurrency,
-                    onValueChange = {
-                        viewModel.updateSourceCurrency(it)
+                    value = state.sourceCurrency,
+                    onValueChange = { newValue ->
+                        scope.launch {
+                            context.converterFormStateDataStore.updateData {
+                                it.toBuilder().apply {
+                                    sourceCurrency = newValue
+                                }.build()
+                            }
+                        }
                     },
                     valueDisplayTransformer = { it.uppercase(Locale.getDefault()) }
                 )
             }
             IconButton(
-                onClick = { viewModel.swap() },
+                onClick = { viewModel.swap(context) },
                 Modifier.width(64.dp),
             ) {
                 Icon(
@@ -102,13 +114,19 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                                 })",
                                 it.id,
                                 mostPopular = mostPopularCurrencies.contains(it.id),
-                                icon = it.getFlagId(LocalContext.current)
+                                icon = it.getFlagId(context)
                             )
                         }
                         .sortedBy { it.name },
-                    value = targetCurrency,
-                    onValueChange = {
-                        viewModel.updateTargetCurrency(it)
+                    value = state.targetCurrency,
+                    onValueChange = { newValue ->
+                        scope.launch {
+                            context.converterFormStateDataStore.updateData {
+                                it.toBuilder().apply {
+                                    targetCurrency = newValue
+                                }.build()
+                            }
+                        }
                     },
                     valueDisplayTransformer = { it.uppercase(Locale.getDefault()) }
                 )
@@ -132,9 +150,15 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                 textStyle = LocalTextStyle.current.copy(
                     textAlign = TextAlign.Center
                 ),
-                value = value,
-                onValueChange = {
-                    viewModel.updateValue(it)
+                value = state.amount,
+                onValueChange = { newValue ->
+                    scope.launch {
+                        context.converterFormStateDataStore.updateData {
+                            it.toBuilder().apply {
+                                amount = newValue
+                            }.build()
+                        }
+                    }
                 },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
@@ -185,25 +209,18 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                         value = it.name
                     )
                 },
-                value = unit.toString(),
-                onValueChange = { viewModel.updateUnit(it) },
+                value = state.amountUnit,
+                onValueChange = { newValue ->
+                    scope.launch {
+                        context.converterFormStateDataStore.updateData {
+                            it.toBuilder().apply {
+                                amountUnit = newValue
+                            }.build()
+                        }
+                    }
+                },
             )
         }
-
-//        Button(
-//            onClick = {
-//                viewModel.convert()
-//                focusManager.clearFocus()
-//            },
-//            colors = ButtonDefaults.buttonColors(
-//                backgroundColor = MaterialTheme.colors.secondary
-//            ),
-//            modifier = Modifier
-//                .align(CenterHorizontally)
-//                .padding(bottom = 16.dp, top = 16.dp)
-//        ) {
-//            Text("Convert")
-//        }
     }
 }
 

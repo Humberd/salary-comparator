@@ -9,6 +9,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ fun ConverterFormScreen(
     navController: NavController = rememberNavController()
 ) {
     val result by viewModel.result.observeAsState(emptyMap())
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxHeight(),
