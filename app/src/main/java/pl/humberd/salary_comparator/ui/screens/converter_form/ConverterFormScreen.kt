@@ -39,19 +39,23 @@ fun ConverterFormScreen(
             }
         )
 
-        Column {
+        Column(
+            Modifier.weight(1f)
+        ) {
             if (result.isEmpty()) {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.disabled) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .fillMaxHeight()
                             .padding(top = 0.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
                     ) {
                         Icon(
                             painterResource(R.drawable.ic_baseline_table_view_24),
                             contentDescription = "",
-                            modifier = Modifier.size(50.dp),
+                            modifier = Modifier.size(120.dp)
                         )
                         Text("Fill the form below")
                     }
