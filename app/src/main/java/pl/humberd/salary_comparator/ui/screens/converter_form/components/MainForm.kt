@@ -1,5 +1,6 @@
 package pl.humberd.salary_comparator.ui.screens.converter_form.components
 
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -23,6 +24,8 @@ import kotlinx.coroutines.launch
 import pl.humberd.salary_comparator.R
 import pl.humberd.salary_comparator.services.AmountUnit
 import pl.humberd.salary_comparator.services.CURRENCIES
+import pl.humberd.salary_comparator.services.Currency
+import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.store.ConverterFormStateSerializer
 import pl.humberd.salary_comparator.store.converterFormStateDataStore
 import pl.humberd.salary_comparator.ui.components.DialogDropdown
@@ -46,9 +49,22 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
     }
 
     val scope = rememberCoroutineScope()
-
-    val mostPopularCurrencies = remember { setOf("chf", "eur", "gbp", "usd", "pl") }
     val focusManager = LocalFocusManager.current
+
+    val dropdownItems = remember {
+        val mostPopularCurrencies = setOf("chf", "eur", "gbp", "usd", "pln")
+
+        val currencies = CURRENCIES
+            .filter { !mostPopularCurrencies.contains(it.id) }
+            .map { toDropdownModel(it, context) }
+            .sortedBy { it.name }
+
+        val foobar = mostPopularCurrencies.map { CurrencyService.get(it)!! }
+            .map { toDropdownModel(it, context) }
+
+        foobar + currencies
+    }
+
 
     Column {
         Row(
@@ -59,24 +75,13 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
-                Modifier.weight(1f).widthIn(max = 150.dp),
+                Modifier
+                    .weight(1f)
+                    .widthIn(max = 150.dp),
             ) {
                 DialogDropdown(
                     navController = navController,
-                    items = CURRENCIES
-                        .map {
-                            DropdownItemModel(
-                                "${it.getName()} (${
-                                    it.id.uppercase(
-                                        Locale.getDefault()
-                                    )
-                                })",
-                                it.id,
-                                mostPopular = mostPopularCurrencies.contains(it.id),
-                                icon = it.getFlagId(context)
-                            )
-                        }
-                        .sortedBy { it.name },
+                    items = dropdownItems,
                     value = state.sourceCurrency,
                     onValueChange = { newValue ->
                         scope.launch {
@@ -100,25 +105,13 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                 )
             }
             Column(
-                Modifier.weight(1f)
+                Modifier
+                    .weight(1f)
                     .widthIn(max = 150.dp),
             ) {
                 DialogDropdown(
                     navController = navController,
-                    items = CURRENCIES
-                        .map {
-                            DropdownItemModel(
-                                "${it.getName()} (${
-                                    it.id.uppercase(
-                                        Locale.getDefault()
-                                    )
-                                })",
-                                it.id,
-                                mostPopular = mostPopularCurrencies.contains(it.id),
-                                icon = it.getFlagId(context)
-                            )
-                        }
-                        .sortedBy { it.name },
+                    items = dropdownItems,
                     value = state.targetCurrency,
                     onValueChange = { newValue ->
                         scope.launch {
@@ -224,6 +217,19 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
         }
     }
 }
+
+private fun toDropdownModel(
+    it: Currency,
+    context: Context
+) = DropdownItemModel(
+    "${it.getName(context)} (${
+        it.id.uppercase(
+            Locale.getDefault()
+        )
+    })",
+    it.id,
+    icon = it.getFlagId(context)
+)
 
 
 @ExperimentalComposeUiApi

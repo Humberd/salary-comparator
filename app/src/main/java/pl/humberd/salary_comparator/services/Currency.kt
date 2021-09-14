@@ -17,6 +17,8 @@ data class Currency(
     @Composable
     fun getName() = stringResource(nameRes)
 
+    fun getName(context: Context) = context.getString(nameRes)
+
     fun updateRate(rate: Double) {
         to1EuroRate = rate
     }

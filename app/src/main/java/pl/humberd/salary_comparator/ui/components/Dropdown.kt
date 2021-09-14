@@ -25,7 +25,6 @@ import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 data class DropdownItemModel(
     val name: String,
     val value: String,
-    val mostPopular: Boolean = false,
     val icon: Int? = null
 )
 
