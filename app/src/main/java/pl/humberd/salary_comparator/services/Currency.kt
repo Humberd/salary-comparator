@@ -93,7 +93,6 @@ val CURRENCIES = listOf(
     Currency("gip", R.string.currency_country_gip, "gi"),
     Currency("gmd", R.string.currency_country_gmd, "gm"),
     Currency("gnf", R.string.currency_country_gnf, "gn"),
-    Currency("gqe", R.string.currency_country_gqe, "gq"),
     Currency("gtq", R.string.currency_country_gtq, "gt"),
     Currency("gyd", R.string.currency_country_gyd, "gy"),
     Currency("hkd", R.string.currency_country_hkd, "hk"),
