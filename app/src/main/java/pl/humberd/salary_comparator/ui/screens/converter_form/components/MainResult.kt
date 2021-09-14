@@ -31,11 +31,9 @@ fun MainResult(
     results: Map<AmountUnit, List<Pair<Currency, Double>>>
 ) {
     val rowLabels = results.keys
-    val uniqueLabels = results.values
-        .flatMap { it }
-        .map { it.first }
-        .toSet()
-    val columnLabels = setOf("") + uniqueLabels
+    val uniqueLabels = results.values.firstOrNull()
+        ?.map { it.first }
+    val columnLabels = listOf("") + (uniqueLabels?: emptyList())
     val context = LocalContext.current
 
     val formatter = remember { NumberFormat.getInstance() }
