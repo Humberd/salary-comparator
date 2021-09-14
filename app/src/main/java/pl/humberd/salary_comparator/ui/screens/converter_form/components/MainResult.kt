@@ -45,12 +45,13 @@ fun MainResult(
     Column {
         // Top row
         Row {
-            columnLabels.forEach {
+            columnLabels.forEachIndexed { index, it ->
                 TableCell(
                     icon = CurrencyService.get(it)?.getFlagId(context),
                     text = it.uppercase(Locale.getDefault()),
                     alignment = End,
-                    isLabel = true
+                    isLabel = true,
+                    weight = if (index == 0) 0.7f else 1f
                 )
             }
         }
@@ -60,7 +61,8 @@ fun MainResult(
             Row {
                 TableCell(
                     text = it.getName(),
-                    isLabel = true
+                    isLabel = true,
+                    weight = 0.7f
                 )
                 results[it].orEmpty().forEach {
                     TableCell(
@@ -79,12 +81,13 @@ fun RowScope.TableCell(
     @DrawableRes icon: Int? = null,
     text: String,
     alignment: Arrangement.Horizontal = Arrangement.Start,
-    isLabel: Boolean = false
+    isLabel: Boolean = false,
+    weight: Float = 1f
 ) {
     CompositionLocalProvider(LocalContentAlpha provides if (isLabel) ContentAlpha.medium else ContentAlpha.high) {
         Row(
             modifier = Modifier
-                .weight(1f)
+                .weight(weight)
                 .height(40.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = alignment
