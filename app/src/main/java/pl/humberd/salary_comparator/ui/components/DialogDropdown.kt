@@ -209,7 +209,11 @@ fun DialogDropdownScreen(
                 },
             )
 
-            LazyColumn(state = searchScrollState) {
+            LazyColumn(
+                state = searchScrollState,
+                reverseLayout = true,
+                modifier = Modifier.weight(1f)
+            ) {
                 items(filteredItems, { it.value }) {
                     DialogDropdownItem(
                         model = it,
