@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
     id 'kotlin-android'
     id "com.google.protobuf" version "0.8.17"
-
 }
 
 android {
@@ -73,6 +73,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-insets:0.18.0"
     implementation "com.google.accompanist:accompanist-insets-ui:0.18.0"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.18.0"
+    implementation "com.google.firebase:firebase-bom:28.4.1"
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "447880286439",
+    "project_id": "salary-comparator",
+    "storage_bucket": "salary-comparator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447880286439:android:56cf6eafe87d89788e1242",
+        "android_client_info": {
+          "package_name": "pl.humberd.salary_comparator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447880286439-mrlshgthqfuvdh5ga2ro8dpdkktu5sl3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQVtkk5plY6GOb5A8HxhmKOJaXnjtW2ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447880286439-mrlshgthqfuvdh5ga2ro8dpdkktu5sl3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
