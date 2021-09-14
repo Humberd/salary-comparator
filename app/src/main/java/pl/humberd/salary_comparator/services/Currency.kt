@@ -84,7 +84,7 @@ val CURRENCIES = listOf(
     Currency("egp", R.string.currency_country_egp, "eg"),
     Currency("ern", R.string.currency_country_ern, "er"),
     Currency("etb", R.string.currency_country_etb, "et"),
-    Currency("eth", R.string.currency_country_eth, "et"),
+    Currency("eth", R.string.currency_country_eth, "eth"),
     Currency("eur", R.string.currency_country_eur, "eu"),
     Currency("fjd", R.string.currency_country_fjd, "fj"),
     Currency("gbp", R.string.currency_country_gbp, "gb"),
