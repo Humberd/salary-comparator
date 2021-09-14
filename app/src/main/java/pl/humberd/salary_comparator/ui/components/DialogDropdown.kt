@@ -209,20 +209,41 @@ fun DialogDropdownScreen(
                 },
             )
 
-            LazyColumn(
-                state = searchScrollState,
-                reverseLayout = true,
-                modifier = Modifier.weight(1f)
-            ) {
-                items(filteredItems, { it.value }) {
-                    DialogDropdownItem(
-                        model = it,
-                        onClick = {
-                            dialogRef.close(DropdownOutput.SELECTED(it.value))
-                        }
-                    )
+            if (filteredItems.isEmpty()) {
+                Column(
+                    Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.disabled) {
+                        Icon(
+                            painterResource(R.drawable.ic_baseline_money_off_24),
+                            contentDescription = null,
+                            modifier = Modifier.size(100.dp)
+                        )
+                        Text(stringResource(R.string.search_currency_no_results))
+                    }
+                }
+
+            } else {
+                LazyColumn(
+                    state = searchScrollState,
+                    reverseLayout = true,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    items(filteredItems, { it.value }) {
+                        DialogDropdownItem(
+                            model = it,
+                            onClick = {
+                                dialogRef.close(DropdownOutput.SELECTED(it.value))
+                            }
+                        )
+                    }
                 }
             }
+
         }
     }
 }

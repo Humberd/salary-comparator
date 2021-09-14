@@ -23,4 +23,6 @@
     <string name="unit_name_day">Dzień</string>
     <string name="unit_name_month">Miesiąc</string>
     <string name="unit_name_year">Rok</string>
+    <string name="search_currency_no_results">Nie znaleziono waluty</string>
+    <string name="screens.converter.no_results">Wpisz kwotę poniżej</string>
 </resources>

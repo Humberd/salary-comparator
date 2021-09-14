@@ -184,4 +184,6 @@
     <string name="snackbar.load_initial_exchange_rate.default_message">Failed to load default exchange rate</string>
     <string name="snackbar.update_exchange_rate.default_message">Something went wrong</string>
     <string name="screens.converter.amount_field.placeholder">Amount</string>
+    <string name="search_currency_no_results">No currency found</string>
+    <string name="screens.converter.no_results">Fill the form below</string>
 </resources>
