@@ -59,7 +59,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
-                Modifier.width(150.dp),
+                Modifier.weight(1f).widthIn(max = 150.dp),
             ) {
                 DialogDropdown(
                     navController = navController,
@@ -100,7 +100,8 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                 )
             }
             Column(
-                Modifier.width(150.dp),
+                Modifier.weight(1f)
+                    .widthIn(max = 150.dp),
             ) {
                 DialogDropdown(
                     navController = navController,
