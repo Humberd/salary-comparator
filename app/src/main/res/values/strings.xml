@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Salary comparator</string>
+    <string name="app_name" translatable="false">Salary Converter</string>
     <string name="currency_country_aed">United Arab Emirates Dirham</string>
     <string name="currency_country_afn">Afghan afghani</string>
     <string name="currency_country_all">Albanian lek</string>
