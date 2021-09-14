@@ -49,8 +49,8 @@ class MainActivity : ComponentActivity() {
                     } catch (e: Exception) {
                         scaffoldState.snackbarHostState.showSnackbar(
                             e.message
-                                ?: context.getString(R.string.screens_settings_options_exchange_rate_action_loading_aria_label),
-                            context.getString(R.string.snackbar_load_initial_exchange_rate_default_message)
+                                ?: context.getString(R.string.snackbar_load_initial_exchange_rate_default_message),
+                            context.getString(R.string.snackbar_action_close)
                         )
                     }
                 }

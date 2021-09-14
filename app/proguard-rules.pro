@@ -82,3 +82,14 @@
 # OkHttp platform used only on JVM and when Conscrypt dependency is available.
 -dontwarn okhttp3.internal.platform.ConscryptPlatform
 -dontwarn org.conscrypt.ConscryptHostnameVerifier
+
+# 3 analytics
+
+-keepattributes SourceFile,LineNumberTable        # Keep file names and line numbers.
+-keep public class * extends java.lang.Exception  # Optional: Keep custom exceptions.
+
+# protobuf
+
+# Wire Protocol Buffers
+-keep class com.squareup.wire.** { *; }
+-keep class pl.humberd.salary_comparator.proto.** { *; }
