@@ -9,6 +9,7 @@ import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,9 +17,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import pl.humberd.salary_comparator.services.AmountUnit
 import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import java.text.NumberFormat
 import java.util.*
 
 typealias Currency = String;
@@ -34,6 +37,8 @@ fun MainResult(
         .toSet()
     val columnLabels = setOf("") + uniqueLabels
     val context = LocalContext.current
+
+    val formatter = remember { NumberFormat.getInstance() }
 
     if (results.isEmpty()) {
         return
@@ -61,7 +66,7 @@ fun MainResult(
                 )
                 results[it].orEmpty().forEach {
                     TableCell(
-                        text = it.second.toInt().toString(),
+                        text = formatter.format(it.second.toInt()),
                         alignment = End,
                         isLabel = false
                     )
@@ -82,7 +87,7 @@ fun RowScope.TableCell(
         Row(
             modifier = Modifier
                 .weight(1f)
-                .height(30.dp),
+                .height(40.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = alignment
         ) {
@@ -96,6 +101,7 @@ fun RowScope.TableCell(
             }
             Text(
                 text = text,
+                fontSize = 20.sp
             )
         }
     }
