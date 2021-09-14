@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Salary comparator</string>
     <string name="generic_search_placeholder">Szukaj...</string>
     <string name="generic_back_button_aria_label">Cofnij</string>
     <string name="generic_text_field_clear_button_aria_label">Wyczyść tekst</string>
     <string name="form_swap_button_aria_label">Zamień waluty</string>
-    <string name="unit_name_hour">Godzinę</string>
-    <string name="unit_name_day">Dzień</string>
-    <string name="unit_name_month">Miesiąc</string>
-    <string name="unit_name_year">Rok</string>
+    <string name="unit_name_per_hour">Godzinę</string>
+    <string name="unit_name_per_day">Dzień</string>
+    <string name="unit_name_per_month">Miesiąc</string>
+    <string name="unit_name_per_year">Rok</string>
     <string name="main_form_per_label">na</string>
     <string name="screens_converter_name">Konwerter</string>
     <string name="screens_settings_name">Ustawienia</string>
@@ -20,4 +19,8 @@
     <string name="snackbar.load_initial_exchange_rate.default_message">Wystąpił problem przy ładowaniu domyślnego kursu walut</string>
     <string name="snackbar.update_exchange_rate.default_message">Wystąpił nieoczekiwany problem</string>
     <string name="screens.converter.amount_field.placeholder">Kwota</string>
+    <string name="unit_name_hour">Godzina</string>
+    <string name="unit_name_day">Dzień</string>
+    <string name="unit_name_month">Miesiąc</string>
+    <string name="unit_name_year">Rok</string>
 </resources>

@@ -205,7 +205,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
             InlineRadio(
                 items = AmountUnit.values().map {
                     InlineRadioModel(
-                        name = it.getName(),
+                        name = it.getPerName(),
                         value = it.name
                     )
                 },

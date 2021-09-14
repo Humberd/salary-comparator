@@ -165,6 +165,10 @@
     <string name="generic_back_button_aria_label">Back</string>
     <string name="generic_text_field_clear_button_aria_label">Clear text</string>
     <string name="form_swap_button_aria_label">Swap currencies</string>
+    <string name="unit_name_per_hour">Hour</string>
+    <string name="unit_name_per_day">Day</string>
+    <string name="unit_name_per_month">Month</string>
+    <string name="unit_name_per_year">Year</string>
     <string name="unit_name_hour">Hour</string>
     <string name="unit_name_day">Day</string>
     <string name="unit_name_month">Month</string>

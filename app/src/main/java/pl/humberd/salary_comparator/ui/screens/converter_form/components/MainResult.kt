@@ -1,17 +1,23 @@
 package pl.humberd.salary_comparator.ui.screens.converter_form.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement.End
 import androidx.compose.material.ContentAlpha
+import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.humberd.salary_comparator.services.AmountUnit
+import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
 import java.util.*
 
@@ -27,31 +33,36 @@ fun MainResult(
         .map { it.first }
         .toSet()
     val columnLabels = setOf("") + uniqueLabels
+    val context = LocalContext.current
 
     if (results.isEmpty()) {
         return
     }
 
     Column {
+        // Top row
         Row {
             columnLabels.forEach {
                 TableCell(
-                    text = it,
-                    alignment = CenterHorizontally,
+                    icon = CurrencyService.get(it)?.getFlagId(context),
+                    text = it.uppercase(Locale.getDefault()),
+                    alignment = End,
                     isLabel = true
                 )
             }
         }
+
+        // Other rows
         rowLabels.forEach {
             Row {
                 TableCell(
-                    text = it.name.lowercase(Locale.getDefault()),
+                    text = it.getName(),
                     isLabel = true
                 )
                 results[it].orEmpty().forEach {
                     TableCell(
                         text = it.second.toInt().toString(),
-                        alignment = CenterHorizontally,
+                        alignment = End,
                         isLabel = false
                     )
                 }
@@ -62,18 +73,27 @@ fun MainResult(
 
 @Composable
 fun RowScope.TableCell(
+    @DrawableRes icon: Int? = null,
     text: String,
-    alignment: Alignment.Horizontal = Alignment.Start,
+    alignment: Arrangement.Horizontal = Arrangement.Start,
     isLabel: Boolean = false
 ) {
     CompositionLocalProvider(LocalContentAlpha provides if (isLabel) ContentAlpha.medium else ContentAlpha.high) {
-        Column(
+        Row(
             modifier = Modifier
                 .weight(1f)
                 .height(30.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = alignment
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = alignment
         ) {
+            if (icon != null) {
+                Icon(
+                    painterResource(icon),
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+            }
             Text(
                 text = text,
             )
@@ -88,20 +108,20 @@ fun PreviewMainResult() {
         MainResult(
             mapOf(
                 AmountUnit.HOUR to listOf(
-                    Pair("EUR", 10.0),
-                    Pair("PLN", 40.0)
+                    Pair("eur", 10.0),
+                    Pair("pln", 40.0)
                 ),
                 AmountUnit.DAY to listOf(
-                    Pair("EUR", 80.0),
-                    Pair("PLN", 320.0)
+                    Pair("eur", 80.0),
+                    Pair("pln", 320.0)
                 ),
                 AmountUnit.MONTH to listOf(
-                    Pair("EUR", 1600.0),
-                    Pair("PLN", 8000.0)
+                    Pair("eur", 1600.0),
+                    Pair("pln", 8000.0)
                 ),
                 AmountUnit.YEAR to listOf(
-                    Pair("EUR", 19_200.0),
-                    Pair("PLN", 76_800.0)
+                    Pair("eur", 19_200.0),
+                    Pair("pln", 76_800.0)
                 ),
             )
         )
