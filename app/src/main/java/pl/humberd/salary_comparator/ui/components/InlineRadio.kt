@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pl.humberd.salary_comparator.services.AmountUnit
-import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import pl.humberd.salary_comparator.ui.theme.SalaryConverterTheme
 
 data class InlineRadioModel(
     val name: String,
@@ -56,7 +56,7 @@ private fun RowScope.InlineRadioItem(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewInlineRadio() {
-    SalarycomparatorTheme {
+    SalaryConverterTheme {
         InlineRadio(
             items = AmountUnit.values().map {
                 InlineRadioModel(

@@ -40,7 +40,7 @@ import pl.humberd.salary_comparator.R
 import pl.humberd.salary_comparator.ui.screens.Dialog
 import pl.humberd.salary_comparator.ui.screens.DialogRef
 import pl.humberd.salary_comparator.ui.screens.DropdownOutput
-import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import pl.humberd.salary_comparator.ui.theme.SalaryConverterTheme
 import java.util.*
 
 @ExperimentalComposeUiApi
@@ -282,7 +282,7 @@ fun DialogDropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewDialogDropdownScreen() {
-    SalarycomparatorTheme {
+    SalaryConverterTheme {
         DialogDropdownScreen(
             dialogRef = DialogRef { },
             value = "",

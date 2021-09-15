@@ -9,13 +9,13 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Salarycomparator">
+        android:theme="@style/Theme.SalaryConverter">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.Salarycomparator.NoActionBar">
+            android:theme="@style/Theme.SalaryConverter.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

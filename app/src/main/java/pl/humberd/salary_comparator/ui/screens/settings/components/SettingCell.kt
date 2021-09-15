@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import pl.humberd.salary_comparator.ui.theme.SalaryConverterTheme
 
 @Composable
 fun SettingCell(
@@ -48,7 +48,7 @@ fun SettingCell(
 @Preview(showBackground = true)
 @Composable
 fun PreviewSettingCell() {
-    SalarycomparatorTheme {
+    SalaryConverterTheme {
         Column {
             repeat(3) {
                 SettingCell(

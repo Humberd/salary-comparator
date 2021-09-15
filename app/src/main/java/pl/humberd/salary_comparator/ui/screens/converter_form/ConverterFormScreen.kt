@@ -21,7 +21,7 @@ import pl.humberd.salary_comparator.R
 import pl.humberd.salary_comparator.ui.screens.Screen
 import pl.humberd.salary_comparator.ui.screens.converter_form.components.MainForm
 import pl.humberd.salary_comparator.ui.screens.converter_form.components.MainResult
-import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import pl.humberd.salary_comparator.ui.theme.SalaryConverterTheme
 
 @ExperimentalComposeUiApi
 @Composable
@@ -85,7 +85,7 @@ fun ConverterFormScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewConverterFormScreen() {
-    SalarycomparatorTheme {
+    SalaryConverterTheme {
         ConverterFormScreen(ConverterFormViewModel())
     }
 }

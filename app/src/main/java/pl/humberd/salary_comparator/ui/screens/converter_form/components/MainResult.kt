@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import pl.humberd.salary_comparator.services.AmountUnit
 import pl.humberd.salary_comparator.services.CurrencyService
-import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import pl.humberd.salary_comparator.ui.theme.SalaryConverterTheme
 import java.text.NumberFormat
 import java.util.*
 
@@ -111,7 +111,7 @@ fun RowScope.TableCell(
 @Preview(showBackground = true)
 @Composable
 fun PreviewMainResult() {
-    SalarycomparatorTheme {
+    SalaryConverterTheme {
         MainResult(
             mapOf(
                 AmountUnit.HOUR to listOf(

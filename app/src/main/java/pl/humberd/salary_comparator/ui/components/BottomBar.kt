@@ -13,7 +13,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import pl.humberd.salary_comparator.ui.screens.Screen
-import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import pl.humberd.salary_comparator.ui.theme.SalaryConverterTheme
 
 @Composable
 fun BottomBar(navController: NavController) {
@@ -54,7 +54,7 @@ fun BottomBar(navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewBottomBar() {
-    SalarycomparatorTheme {
+    SalaryConverterTheme {
         val navController = rememberNavController()
 
         BottomBar(navController)

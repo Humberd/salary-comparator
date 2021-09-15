@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.murgupluoglu.flagkit.FlagKit
 import pl.humberd.salary_comparator.services.CurrencyService
-import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import pl.humberd.salary_comparator.ui.theme.SalaryConverterTheme
 
 data class DropdownItemModel(
     val name: String,
@@ -118,7 +118,7 @@ fun DropdownItem(model: DropdownItemModel, onClick: () -> Unit) {
 fun PreviewDropdown() {
     var state by remember { mutableStateOf("PLN") }
 
-    SalarycomparatorTheme {
+    SalaryConverterTheme {
         val context = LocalContext.current
         Dropdown(
             label = "From",
@@ -136,7 +136,7 @@ fun PreviewDropdown() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewDropdownItem() {
-    SalarycomparatorTheme {
+    SalaryConverterTheme {
         DropdownItem(
             DropdownItemModel(
                 "Poland (PLN)",

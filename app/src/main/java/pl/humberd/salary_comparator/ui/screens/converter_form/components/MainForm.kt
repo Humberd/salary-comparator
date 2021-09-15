@@ -33,7 +33,7 @@ import pl.humberd.salary_comparator.ui.components.DropdownItemModel
 import pl.humberd.salary_comparator.ui.components.InlineRadio
 import pl.humberd.salary_comparator.ui.components.InlineRadioModel
 import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormViewModel
-import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import pl.humberd.salary_comparator.ui.theme.SalaryConverterTheme
 import java.util.*
 
 @ExperimentalComposeUiApi
@@ -236,7 +236,7 @@ private fun toDropdownModel(
 @Preview(showBackground = true)
 @Composable
 fun PreviewMainForm() {
-    SalarycomparatorTheme {
+    SalaryConverterTheme {
         MainForm(ConverterFormViewModel(), NavController(LocalContext.current))
     }
 }

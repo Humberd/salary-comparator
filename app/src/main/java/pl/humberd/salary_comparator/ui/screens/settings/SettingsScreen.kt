@@ -20,7 +20,7 @@ import pl.humberd.salary_comparator.R
 import pl.humberd.salary_comparator.services.CurrencyService
 import pl.humberd.salary_comparator.ui.screens.Screen
 import pl.humberd.salary_comparator.ui.screens.settings.components.SettingCell
-import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import pl.humberd.salary_comparator.ui.theme.SalaryConverterTheme
 
 @Composable
 fun SettingsScreen(
@@ -75,7 +75,7 @@ fun SettingsScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewSettingsScreen() {
-    SalarycomparatorTheme {
+    SalaryConverterTheme {
         SettingsScreen(SettingsViewModel())
     }
 }

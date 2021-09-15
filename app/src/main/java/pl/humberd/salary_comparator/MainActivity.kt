@@ -27,7 +27,7 @@ import pl.humberd.salary_comparator.ui.screens.Dialog
 import pl.humberd.salary_comparator.ui.screens.Screen
 import pl.humberd.salary_comparator.ui.screens.converter_form.ConverterFormScreen
 import pl.humberd.salary_comparator.ui.screens.settings.SettingsScreen
-import pl.humberd.salary_comparator.ui.theme.SalarycomparatorTheme
+import pl.humberd.salary_comparator.ui.theme.SalaryConverterTheme
 
 
 @ExperimentalComposeUiApi
@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            SalarycomparatorTheme {
+            SalaryConverterTheme {
                 ProvideWindowInsets {
                     Surface(
                         color = MaterialTheme.colors.background,
