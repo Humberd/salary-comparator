@@ -67,7 +67,7 @@ fun ConverterFormScreen(
                 Column(
                     Modifier.padding(top = 16.dp, start = 16.dp, end = 16.dp)
                 ) {
-                    MainResult(result)
+                    MainResult(result, stringResource(R.string.screens_converter_rate_per))
                 }
             }
         }

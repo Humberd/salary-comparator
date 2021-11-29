@@ -3,6 +3,7 @@ package pl.humberd.salary_comparator.ui.screens.converter_form.components
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.End
+import androidx.compose.foundation.layout.Arrangement.Start
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.Icon
 import androidx.compose.material.LocalContentAlpha
@@ -28,12 +29,13 @@ typealias Currency = String;
 
 @Composable
 fun MainResult(
-    results: Map<AmountUnit, List<Pair<Currency, Double>>>
+    results: Map<AmountUnit, List<Pair<Currency, Double>>>,
+    dataLabel: String
 ) {
     val rowLabels = results.keys
     val uniqueLabels = results.values.firstOrNull()
-        ?.map { it.first }
-    val columnLabels = listOf("") + (uniqueLabels?: emptyList())
+        ?.map { it.first.uppercase(Locale.getDefault()) }
+    val columnLabels = listOf(dataLabel) + (uniqueLabels ?: emptyList())
     val context = LocalContext.current
 
     val formatter = remember { NumberFormat.getInstance() }
@@ -47,9 +49,9 @@ fun MainResult(
         Row {
             columnLabels.forEachIndexed { index, it ->
                 TableCell(
-                    icon = CurrencyService.get(it)?.getFlagId(context),
-                    text = it.uppercase(Locale.getDefault()),
-                    alignment = End,
+                    icon = CurrencyService.get(it.lowercase(Locale.getDefault()))?.getFlagId(context),
+                    text = it,
+                    alignment = if (index == 0) Start else End,
                     isLabel = true,
                     weight = if (index == 0) 0.7f else 1f
                 )
@@ -60,7 +62,7 @@ fun MainResult(
         rowLabels.forEach {
             Row {
                 TableCell(
-                    text = it.getName(),
+                    text = it.getPerName(),
                     isLabel = true,
                     weight = 0.7f
                 )
@@ -80,7 +82,7 @@ fun MainResult(
 fun RowScope.TableCell(
     @DrawableRes icon: Int? = null,
     text: String,
-    alignment: Arrangement.Horizontal = Arrangement.Start,
+    alignment: Arrangement.Horizontal = Start,
     isLabel: Boolean = false,
     weight: Float = 1f
 ) {
@@ -113,7 +115,7 @@ fun RowScope.TableCell(
 fun PreviewMainResult() {
     SalaryConverterTheme {
         MainResult(
-            mapOf(
+            results = mapOf(
                 AmountUnit.HOUR to listOf(
                     Pair("eur", 10.0),
                     Pair("pln", 40.0)
@@ -130,7 +132,8 @@ fun PreviewMainResult() {
                     Pair("eur", 19_200.0),
                     Pair("pln", 76_800.0)
                 ),
-            )
+            ),
+            dataLabel = "Rate per"
         )
     }
 }

@@ -185,4 +185,5 @@
     <string name="screens.converter.amount_field.placeholder">Amount</string>
     <string name="search_currency_no_results">No currency found</string>
     <string name="screens.converter.no_results">Fill the form below</string>
+    <string name="screens.converter.rate_per">Rate per</string>
 </resources>
