@@ -104,7 +104,7 @@ fun RowScope.TableCell(
             }
             Text(
                 text = text,
-                fontSize = 20.sp
+                fontSize = if (isLabel) 16.sp else 20.sp
             )
         }
     }
