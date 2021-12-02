@@ -12,12 +12,12 @@ import pl.humberd.salary_comparator.R
 import pl.humberd.salary_comparator.services.CurrencyService
 
 class SettingsViewModel : ViewModel() {
-    private val _isLoading = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
+    private val _isExchangeRateUpdateInProgress = mutableStateOf(false)
+    val isExchangeRateUpdateInProgress: State<Boolean> = _isExchangeRateUpdateInProgress
 
     fun updateExchangeRate(context: Context, scaffoldState: ScaffoldState) {
         viewModelScope.launch(Dispatchers.IO) {
-            _isLoading.value = true
+            _isExchangeRateUpdateInProgress.value = true
             try {
                 CurrencyService.updateFromApi(context)
             } catch (e: Exception) {
@@ -28,7 +28,7 @@ class SettingsViewModel : ViewModel() {
                     )
                 }
             } finally {
-                _isLoading.value = false
+                _isExchangeRateUpdateInProgress.value = false
             }
         }
     }

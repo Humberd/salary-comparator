@@ -1,5 +1,6 @@
 package pl.humberd.salary_comparator.ui.screens.settings.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.LocalContentAlpha
@@ -18,28 +19,36 @@ import pl.humberd.salary_comparator.ui.theme.SalaryConverterTheme
 fun SettingCell(
     primaryText: String,
     secondaryText: String,
-    action: @Composable () -> Unit = {}
+    onClick: (() -> Unit)? = null,
+    action: @Composable () -> Unit = {},
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth()
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        modifier = Modifier.clickable(onClick != null) {
+            onClick?.invoke()
+        },
     ) {
-        Column {
-            Text(
-                text = primaryText,
-                fontSize = 15.sp
-            )
-            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
                 Text(
-                    secondaryText,
-                    fontSize = 14.sp
+                    text = primaryText,
+                    fontSize = 15.sp
                 )
+                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                    Text(
+                        secondaryText,
+                        fontSize = 14.sp
+                    )
+                }
             }
-        }
-        Column {
-            action()
+            Column {
+                action()
+            }
         }
     }
 }
@@ -59,6 +68,12 @@ fun PreviewSettingCell() {
                         Text("Update")
                     }
                 }
+            }
+            SettingCell(
+                primaryText = "Time Settings",
+                secondaryText = "Specify amount of working hours",
+                onClick = {}
+            ) {
             }
         }
     }

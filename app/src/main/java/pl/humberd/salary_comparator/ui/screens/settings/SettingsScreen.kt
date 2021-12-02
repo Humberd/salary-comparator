@@ -29,7 +29,7 @@ fun SettingsScreen(
     navController: NavController = rememberNavController()
 ) {
     val lastUpdate by remember { CurrencyService.lastUpdate }
-    val isLoading by remember { viewModel.isLoading }
+    val isExchangeRateUpdateInProgress by remember { viewModel.isExchangeRateUpdateInProgress }
     val context = LocalContext.current
 
     Column {
@@ -55,10 +55,10 @@ fun SettingsScreen(
             ),
         ) {
             TextButton(
-                enabled = !isLoading,
+                enabled = !isExchangeRateUpdateInProgress,
                 onClick = { viewModel.updateExchangeRate(context, scaffoldState) }
             ) {
-                if (!isLoading) {
+                if (!isExchangeRateUpdateInProgress) {
                     Text(stringResource(R.string.screens_settings_options_exchange_rate_action_name))
                 } else {
                     CircularProgressIndicator(
@@ -68,6 +68,11 @@ fun SettingsScreen(
                 }
             }
         }
+        SettingCell(
+            primaryText = "Time Settings",
+            secondaryText = "Specify amount of working hours",
+            onClick = {}
+        )
     }
 }
 
