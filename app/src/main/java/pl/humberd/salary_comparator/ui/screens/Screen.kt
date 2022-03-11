@@ -24,6 +24,7 @@ sealed class Screen(
         nameRes = R.string.screens_settings_name,
         icon = R.drawable.ic_baseline_settings_24
     )
+
     companion object {
         fun findByRoute(route: String): Screen {
             return when (route) {
@@ -36,6 +37,7 @@ sealed class Screen(
 
     @Composable
     fun getName() = stringResource(nameRes)
+
     @Composable
     fun getIcon() = painterResource(icon)
 }
@@ -74,7 +76,7 @@ sealed class Dialog(val route: String) {
             }
 
             navController.navigate(
-                route = "dropdown"
+                route = route
             )
         }
     }

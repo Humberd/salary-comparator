@@ -68,11 +68,6 @@ fun SettingsScreen(
                 }
             }
         }
-        SettingCell(
-            primaryText = "Time Settings",
-            secondaryText = "Specify amount of working hours",
-            onClick = {}
-        )
     }
 }
 
