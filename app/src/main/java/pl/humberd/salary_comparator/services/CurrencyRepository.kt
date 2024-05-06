@@ -5,9 +5,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.create
 import retrofit2.http.GET
-
 interface CurrencyRepository {
-    @GET("/gh/fawazahmed0/currency-api@1/latest/currencies/eur.json")
+    @GET("/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json")
     fun fetchCurrencies(): Call<String>
 
     companion object {
