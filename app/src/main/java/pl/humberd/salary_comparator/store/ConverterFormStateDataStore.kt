@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
 import androidx.datastore.dataStore
-import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
+import com.google.protobuf.InvalidProtocolBufferException
 import pl.humberd.salary_comparator.proto.ConverterFormStateOuterClass.ConverterFormState
 import pl.humberd.salary_comparator.proto.converterFormState
 import pl.humberd.salary_comparator.services.AmountUnit
