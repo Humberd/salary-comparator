@@ -43,13 +43,16 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
     val state by context.converterFormStateDataStore.data.collectAsState(
         ConverterFormStateSerializer.defaultValue
     )
+    var textInput by remember { mutableStateOf("") }
 
     LaunchedEffect(state) {
         viewModel.convert(state)
+        textInput = state.amount
     }
 
     val scope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
+    
 
     val dropdownItems = remember {
         val mostPopularCurrencies = setOf("chf", "eur", "gbp", "usd", "pln")
@@ -133,7 +136,7 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
             horizontalArrangement = Arrangement.Center,
         ) {
             TextField(
-                modifier = Modifier.width(150.dp),
+                modifier = Modifier.width(150.dp).height(56.dp),
                 placeholder = {
                     Text(
                         text = stringResource(R.string.screens_converter_amount_field_placeholder),
@@ -144,8 +147,9 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                 textStyle = LocalTextStyle.current.copy(
                     textAlign = TextAlign.Center
                 ),
-                value = state.amount,
+                value = textInput,
                 onValueChange = { newValue ->
+                    textInput = newValue
                     scope.launch {
                         context.converterFormStateDataStore.updateData {
                             it.toBuilder().apply {
