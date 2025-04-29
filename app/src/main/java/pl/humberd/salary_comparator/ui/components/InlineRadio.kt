@@ -45,6 +45,7 @@ private fun RowScope.InlineRadioItem(
             .weight(1f)
             .fillMaxHeight(),
         onClick = { onValueChange(model.value) },
+        contentPadding = PaddingValues(0.dp),
         shape = MaterialTheme.shapes.large,
         border = if (isSelected) null else ButtonDefaults.outlinedBorder,
         colors = if (isSelected) ButtonDefaults.buttonColors() else ButtonDefaults.outlinedButtonColors()
