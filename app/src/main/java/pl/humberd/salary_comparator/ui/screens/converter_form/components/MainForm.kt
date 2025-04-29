@@ -170,20 +170,6 @@ fun MainForm(viewModel: ConverterFormViewModel = viewModel(), navController: Nav
                 singleLine = true,
                 shape = MaterialTheme.shapes.large,
             )
-
-//            Column(
-//                modifier = Modifier.weight(0.5f),
-//            ) {
-//                Dropdown(
-//                    items = AmountUnit.values().map {
-//                        DropdownItemModel(it.getName(), it.name, icon = null)
-//                    },
-//                    value = unit.toString(),
-//                    onValueChange = {
-//                        viewModel.updateUnit(it)
-//                    },
-//                )
-//            }
         }
 
         Row(
