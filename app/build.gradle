@@ -14,8 +14,8 @@ android {
         applicationId "pl.humberd.salary_comparator"
         minSdk libs.versions.minSdk.get().toInteger()
         targetSdk libs.versions.targetSdk.get().toInteger()
-        versionCode 10
-        versionName "1.0.5"
+        versionCode 11
+        versionName "1.0.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
